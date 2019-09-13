@@ -1,0 +1,56 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "farmResourceId": {
+      "type": "string"
+    },
+    "connectionstring": {
+      "type": "string"
+    },
+    "webappName": {
+      "type": "string"
+    },
+    "appsettings": {
+      "type": "array"
+    }
+  },
+  "variables": {
+    "builtinAppsettings": [
+      {
+        "name": "builtin_setting",
+        "value": "builtin_test"
+      },
+      {
+        "name": "updated_for_all",
+        "value": "yabiii"
+      }
+    ],
+    "finalAppsettings": "[union(variables('builtinAppsettings'),parameters('appsettings'))]",
+    "connectionstrings": [
+      {
+        "name": "conn",
+        "connectionString": "[parameters('connectionstring')]",
+        "type": "SQLAzure"
+      }
+    ]
+
+  },
+  "resources": [
+    {
+      "name": "[parameters('webappName')]",
+      "type": "Microsoft.Web/sites",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-08-01",
+      "properties": {
+        "serverFarmId": "[parameters('farmResourceId')]",
+        "siteConfig": {
+          "appSettings": "[variables('finalAppsettings')]",
+          "connectionStrings": "[variables('connectionstrings')]"
+        }
+      }
+    }
+  ],
+  "outputs": {
+  }
+}

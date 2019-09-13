@@ -1,0 +1,57 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "parameterTest": {
+      "type": "string"
+    },
+    "env": {
+      "type": "string",
+      "defaultValue": "dev"
+    },
+    "storageSasToken": {
+      "type": "string"
+    },
+    "storageUri": {
+      "type": "string"
+    }
+  },
+  "variables": {
+    "azuretemplatestoragename": "[concat('azuretemplatestorage',parameters('env'))]",
+    "azuretemplatestorageurl": "[parameters('storageUri')]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "name": "databaseDeploy",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[uri(deployment().properties.templateLink.uri,concat('SubTemplates/ContainerOrchestration/aks.json',parameters('storageSasToken')))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "name": "databaseDeploy",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[uri(deployment().properties.templateLink.uri,concat('SubTemplates/Databases/mssql.json',parameters('storageSasToken')))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+
+        }
+      }
+    }
+  ],
+  "outputs": {
+  }
+}
