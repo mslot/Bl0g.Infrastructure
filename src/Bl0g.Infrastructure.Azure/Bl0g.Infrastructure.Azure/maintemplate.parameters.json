@@ -3,22 +3,40 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "clusterName": {
-      "value": "GEN-UNIQUE"
+      "value": null
     },
     "dnsPrefix": {
-      "value": "GEN-UNIQUE"
+      "value": null
     },
     "linuxAdminUsername": {
-      "value": "GEN-UNIQUE"
+      "value": null
     },
     "sshRSAPublicKey": {
-      "value": "GEN-SSH-PUB-KEY"
+      "value": null
     },
     "servicePrincipalClientId": {
-      "value": "GEN-GUID"
+      "value": null
     },
     "servicePrincipalClientSecret": {
-      "value": "GEN-UNIQUE"
+      "value": null
+    },
+    "mssqlAdminLogin": {
+      "value": null
+    },
+    "mssqlAdminPassword": {
+      "value": null
+    },
+    "serverName": {
+      "value": "blog-server"
+    },
+    "skuName": {
+      "value": "S0"
+    },
+    "mssqlDatabaseName": {
+      "value": "blog-articles-db"
+    },
+    "mssqlCollation": {
+      "value": "SQL_Latin1_General_CP1_CI_AS"
     }
   }
 }

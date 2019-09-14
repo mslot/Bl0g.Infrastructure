@@ -2,6 +2,9 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "env": {
+      "type": "string"
+    },
     "adminLogin": {
       "type": "string"
     },
@@ -24,17 +27,16 @@
     }
   },
   "variables": {
+    "databaseName": "[concat(parameters('databaseName'),'-',parameters('env'))]",
+    "serverName": "[concat(parameters('serverName'),'-',parameters('env'))]"
   },
   "resources": [
     {
-      "name": "[parameters('databaseName')]",
+      "name": "[variables('serverName')]",
       "type": "Microsoft.Sql/servers",
       "location": "[resourceGroup().location]",
       "apiVersion": "2014-04-01-preview",
       "dependsOn": [],
-      "tags": {
-        "displayName": "sqlservertest"
-      },
       "properties": {
         "administratorLogin": "[parameters('adminLogin')]",
         "administratorLoginPassword": "[parameters('adminPassword')]"
@@ -46,7 +48,7 @@
           "location": "[resourceGroup().location]",
           "apiVersion": "2014-04-01-preview",
           "dependsOn": [
-            "[resourceId('Microsoft.Sql/servers', parameters('databaseName'))]"
+            "[resourceId('Microsoft.Sql/servers', variables('databaseName'))]"
           ],
           "properties": {
             "startIpAddress": "0.0.0.0",
@@ -54,16 +56,13 @@
           }
         },
         {
-          "name": "[parameters('databaseName')]",
+          "name": "[variables('databaseName')]",
           "type": "databases",
           "location": "[resourceGroup().location]",
           "apiVersion": "2017-10-01-preview",
           "dependsOn": [
-            "[resourceId('Microsoft.Sql/servers', parameters('databaseName'))]"
+            "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]"
           ],
-          "tags": {
-            "displayName": "sqldatabase"
-          },
           "sku": {
             "name": "[parameters('skuName')]"
           },

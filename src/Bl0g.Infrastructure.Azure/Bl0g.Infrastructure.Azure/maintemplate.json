@@ -131,31 +131,31 @@
     "azuretemplatestorageurl": "[parameters('storageUri')]"
   },
   "resources": [
-    {
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2018-05-01",
-      "name": "aksDeploy",
-      "dependsOn": [ "databaseDeploy" ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[uri(deployment().properties.templateLink.uri,concat('SubTemplates/ContainerOrchestration/aks.json',parameters('storageSasToken')))]"
-        },
-        "parameters": {
-          "clusterName": { "value": "[parameters('aksClusterName')]" },
-          "location": { "value": "[parameters('aksLocation')]" },
-          "osDiskSizeGB": { "value": "[parameters('aksOsDiskSizeGB')]" },
-          "agentCount": { "value": "[parameters('aksAgentCount')]" },
-          "agentVMSize": { "value": "[parameters('aksAgentVMSize')]" },
-          "linuxAdminUsername": { "value": "[parameters('aksLinuxAdminUsername')]" },
-          "sshRSAPublicKey": { "value": "[parameters('aksSshRSAPublicKey')]" },
-          "servicePrincipalClientId": { "value": "[parameters('aksServicePrincipalClientId')]" },
-          "servicePrincipalClientSecret": { "value": "[parameters('aksServicePrincipalClientSecret')]" },
-          "osType": { "value": "[parameters('aksOsType')]" },
-          "kubernetesVersion": { "value": "[parameters('aksKubernetesVersion')]" }
-        }
-      }
-    },
+    //{
+    //  "type": "Microsoft.Resources/deployments",
+    //  "apiVersion": "2018-05-01",
+    //  "name": "aksDeploy",
+    //  "dependsOn": [ "databaseDeploy" ],
+    //  "properties": {
+    //    "mode": "Incremental",
+    //    "templateLink": {
+    //      "uri": "[uri(deployment().properties.templateLink.uri,concat('SubTemplates/ContainerOrchestration/aks.json',parameters('storageSasToken')))]"
+    //    },
+    //    "parameters": {
+    //      "clusterName": { "value": "[parameters('aksClusterName')]" },
+    //      "location": { "value": "[parameters('aksLocation')]" },
+    //      "osDiskSizeGB": { "value": "[parameters('aksOsDiskSizeGB')]" },
+    //      "agentCount": { "value": "[parameters('aksAgentCount')]" },
+    //      "agentVMSize": { "value": "[parameters('aksAgentVMSize')]" },
+    //      "linuxAdminUsername": { "value": "[parameters('aksLinuxAdminUsername')]" },
+    //      "sshRSAPublicKey": { "value": "[parameters('aksSshRSAPublicKey')]" },
+    //      "servicePrincipalClientId": { "value": "[parameters('aksServicePrincipalClientId')]" },
+    //      "servicePrincipalClientSecret": { "value": "[parameters('aksServicePrincipalClientSecret')]" },
+    //      "osType": { "value": "[parameters('aksOsType')]" },
+    //      "kubernetesVersion": { "value": "[parameters('aksKubernetesVersion')]" }
+    //    }
+    //  }
+    //},
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
@@ -171,7 +171,8 @@
           "databaseName": { "value": "[parameters('mssqlDatabaseName')]" },
           "collation": { "value": "[parameters('mssqlCollation')]" },
           "skuName": { "value": "[parameters('mssqlSkuName')]" },
-          "serverName": { "value": "[parameters('mssqlServerName')]" }
+          "serverName": { "value": "[parameters('mssqlServerName')]" },
+          "env": { "value": "[parameters('env')]" }
         }
       }
     }
