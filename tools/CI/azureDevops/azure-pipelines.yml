@@ -43,10 +43,21 @@ stages:
                     deploymentMode: 'Incremental'
                 - task: AzureFileCopy@3
                   inputs:
-                    SourcePath: '$(Pipeline.Workspace)\drop'
+                    SourcePath: '$(Release.Template.Arm.Source.Path)'
                     azureSubscription: 'blog-connection'
                     Destination: 'AzureBlob'
-                    storage: '$(Release.Template.Storage.Name)'
+                    storage: '$(Release.Template.Storage.Name)$(Env)'
                     ContainerName: 'arm'
-                    outputStorageUri: 'armStorageUri'
-                    outputStorageContainerSasToken: 'armStorageSasToken'
+                    outputStorageUri: 'ArmStorageUri'
+                    outputStorageContainerSasToken: 'ArmStorageSasToken'
+                - task: AzureResourceGroupDeployment@2
+                  inputs:
+                    azureSubscription: 'blog-connection'
+                    action: 'Create Or Update Resource Group'
+                    resourceGroupName: '$(Release.ResourceGroup.Name)'
+                    location: '$(Release.Location)'
+                    templateLocation: 'URL of the file'
+                    csmFileLink: '$(ArmStorageUri)maintemplate.json$(ArmStorageSasToken)'
+                    csmParametersFileLink: '$(ArmStorageUri)maintemplate.parameters.json$(ArmStorageSasToken)'
+                    overrideParameters: '-mssqlAdminLogin "$(Database.Login)" -mssqlAdminPassword "$(Database.Password)"'
+                    deploymentMode: 'Incremental'
