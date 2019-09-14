@@ -36,7 +36,7 @@ stages:
                     resourceGroupName: $(Release.ResourceGroup.Name)
                     location: $(Release.Location)
                     templateLocation: 'Linked artifact'
-                    csmFile: 'drop\SubTemplates\Bootstrapping\azuretemplatestorage.json'
-                    csmParametersFile: 'drop\SubTemplates\Bootstrapping\azuretemplatestorage.json'
+                    csmFile: '$(Build.ArtifactStagingDirectory)\drop\SubTemplates\Bootstrapping\azuretemplatestorage.json'
+                    csmParametersFile: '$(Build.ArtifactStagingDirectory)\drop\SubTemplates\Bootstrapping\azuretemplatestorage.json'
                     overrideParameters: ''
                     deploymentMode: 'Incremental'
