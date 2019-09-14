@@ -19,7 +19,7 @@ stages:
         publishLocation: 'Container'
 - stage: Deploy
   variables:
-  - group: Bl0g.Infrastructure.Release
+    - group: Bl0g.Infrastructure.Release
   jobs:
   - deployment: Deploy
     pool:
@@ -31,12 +31,12 @@ stages:
                 steps:
                 - task: AzureResourceGroupDeployment@2
                   inputs:
-                    azureSubscription: '$(Release.Subscription)'
+                    azureSubscription: 'blog-connection'
                     action: 'Create Or Update Resource Group'
-                    resourceGroupName: '$(Release.ResourceGroup.Name)'
-                    location: '$(Release.Location)'
+                    resourceGroupName: $(Release.ResourceGroup.Name)
+                    location: $(Release.Location)
                     templateLocation: 'Linked artifact'
-                    csmFile: '$(Release.Template.Path)'
-                    csmParametersFile: '$(Release.Template.Parameters.Path)'
-                    overrideParameters: '$(Release.Template.Parameters.Overrides)'
+                    csmFile: 'SubTemplates/Bootstraping/azuretemplatestorage.json'
+                    csmParametersFile: 'SubTemplates/Bootstraping/azuretemplatestorage.json'
+                    overrideParameters: ''
                     deploymentMode: 'Incremental'
