@@ -18,12 +18,12 @@ stages:
         ArtifactName: 'drop'
         publishLocation: 'Container'
 - stage: Deploy
-  variables:
-  - group: Bl0g.Infrastructure.Release
-  - name: CONNECTION
-    value: 'blog-connection'
   jobs:
   - deployment: Deploy
+    variables:
+    - group: Bl0g.Infrastructure.Release
+    - name: CONNECTION
+      value: 'blog-connection'
     pool:
         vmImage: 'windows-latest'
     environment: 'blog-deployment'
