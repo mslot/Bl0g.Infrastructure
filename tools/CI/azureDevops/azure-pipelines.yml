@@ -31,7 +31,7 @@ stages:
                 steps:
                 - task: AzureResourceGroupDeployment@2
                   inputs:
-                    azureSubscription: $(Release.Subscription)
+                    azureSubscription: '$(Release.Subscription)'
                     action: 'Create Or Update Resource Group'
                     resourceGroupName: $(Release.ResourceGroup.Name)
                     location: $(Release.Location)
