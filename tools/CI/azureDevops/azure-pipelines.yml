@@ -19,7 +19,8 @@ stages:
         publishLocation: 'Container'
 - stage: Deploy
   variables:
-    - group: Bl0g.Infrastructure.Release
+    - group: Bl0g.Production
+    - group: Bl0g.Infrastructure.Bootstrap.Release
   jobs:
   - deployment: Deploy
     pool:
@@ -36,7 +37,16 @@ stages:
                     resourceGroupName: $(Release.ResourceGroup.Name)
                     location: $(Release.Location)
                     templateLocation: 'Linked artifact'
-                    csmFile: '$(Pipeline.Workspace)\drop\SubTemplates\Bootstrapping\azuretemplatestorage.json'
-                    csmParametersFile: '$(Pipeline.Workspace)\drop\SubTemplates\Bootstrapping\azuretemplatestorage.json'
-                    overrideParameters: ''
+                    csmFile: '$(Release.Template.Path)'
+                    csmParametersFile: '$(Release.Template.Parameters.Path)'
+                    overrideParameters: '$(Release.Template.Parameters.Overrides)'
                     deploymentMode: 'Incremental'
+                - task: AzureFileCopy@3
+                  inputs:
+                    SourcePath: '$(Pipeline.Workspace)\drop'
+                    azureSubscription: 'blog-connection'
+                    Destination: 'AzureBlob'
+                    storage: '$(Release.Template.Storage.Name)'
+                    ContainerName: 'arm'
+                    outputStorageUri: 'armStorageUri'
+                    outputStorageContainerSasToken: 'armStorageSasToken'
