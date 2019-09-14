@@ -19,6 +19,7 @@ stages:
         publishLocation: 'Container'
 - stage: Deploy
   variables:
+    - group: Bl0g
     - group: Bl0g.Production
     - group: Bl0g.Infrastructure.Bootstrap.Release
   jobs:
@@ -39,7 +40,7 @@ stages:
                     templateLocation: 'Linked artifact'
                     csmFile: '$(Release.Template.Path)'
                     csmParametersFile: '$(Release.Template.Parameters.Path)'
-                    overrideParameters: '$(Release.Template.Parameters.Overrides)'
+                    overrideParameters: '-storagename "$(Release.Template.Storage.Name)" -env "$(Env)"'
                     deploymentMode: 'Incremental'
                 - task: AzureFileCopy@3
                   inputs:
