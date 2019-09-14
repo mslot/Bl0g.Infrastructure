@@ -19,6 +19,7 @@ stages:
         publishLocation: 'Container'
 - stage: Deploy
   variables:
+    - group: Bl0g.Production
     - group: Bl0g.Infrastructure.Bootstrap.Release
   jobs:
   - deployment: Deploy
@@ -40,3 +41,12 @@ stages:
                     csmParametersFile: '$(Release.Template.Parameters.Path)'
                     overrideParameters: '$(Release.Template.Parameters.Overrides)'
                     deploymentMode: 'Incremental'
+                - task: AzureFileCopy@3
+                  inputs:
+                    SourcePath: '$(Pipeline.Workspace)\drop'
+                    azureSubscription: 'blog-connection'
+                    Destination: 'AzureBlob'
+                    storage: '$(Release.Template.Storage.Name)'
+                    ContainerName: 'arm'
+                    outputStorageUri: 'armStorageUri'
+                    outputStorageContainerSasToken: 'armStorageSasToken'
