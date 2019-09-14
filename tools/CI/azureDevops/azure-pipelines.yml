@@ -5,24 +5,22 @@ stages:
     pool:
         vmImage: 'windows-latest'
     steps:
-    - script: echo Building!
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: 'src/Bl0g.Infrastructure.Azure/Bl0g.Infrastructure.Azure'
+        Contents: '**'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
 - stage: Deploy
   jobs:
   - deployment: Deploy
     pool:
         vmImage: 'windows-latest'
-    environment: 'blog-deployment'
-    strategy:
-        runOnce:
-            deploy:
-                steps:
-                - script: echo deploy ARM template
-- stage: Deploy 2
-  jobs:
-  - deployment: Deploy
-    pool:
-        vmImage: 'windows-latest'
-    environment: 'blog-deployment'
+    environment: 'blog-deployment-dev'
     strategy:
         runOnce:
             deploy:
