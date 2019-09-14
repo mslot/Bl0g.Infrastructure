@@ -33,10 +33,10 @@ stages:
                   inputs:
                     azureSubscription: 'blog-connection'
                     action: 'Create Or Update Resource Group'
-                    resourceGroupName: $(Release.ResourceGroup.Name)
+                    resourceGroupName: 'West Europe'
                     location: $(Release.Location)
                     templateLocation: 'Linked artifact'
-                    csmFile: $(Release.Template.Path)
-                    csmParametersFile: $(Release.Template.Parameters.Path)
-                    overrideParameters: $(Release.Template.Parameters.Overrides)
+                    csmFile: '$(Build.ArtifactStagingDirectory)/drop/SubTemplates/Bootstrapping/azuretemplatestorage.json'
+                    csmParametersFile: '$(Build.ArtifactStagingDirectory)/drop/SubTemplates/Bootstrapping/azuretemplatestorage.json'
+                    overrideParameters: ''
                     deploymentMode: 'Incremental'
