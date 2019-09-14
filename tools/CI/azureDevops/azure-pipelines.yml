@@ -31,7 +31,7 @@ stages:
                 steps:
                 - task: AzureResourceGroupDeployment@2
                   inputs:
-                    azureSubscription: 'test-for-build'
+                    azureSubscription: 'blog-connection'
                     action: 'Create Or Update Resource Group'
                     resourceGroupName: $(Release.ResourceGroup.Name)
                     location: $(Release.Location)
