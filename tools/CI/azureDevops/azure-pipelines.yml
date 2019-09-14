@@ -33,7 +33,7 @@ stages:
                   inputs:
                     azureSubscription: 'blog-connection'
                     action: 'Create Or Update Resource Group'
-                    resourceGroupName: 'West Europe'
+                    resourceGroupName: $(Release.ResourceGroup.Name)
                     location: $(Release.Location)
                     templateLocation: 'Linked artifact'
                     csmFile: '$(Build.ArtifactStagingDirectory)/drop/SubTemplates/Bootstrapping/azuretemplatestorage.json'
