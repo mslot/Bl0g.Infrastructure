@@ -17,3 +17,14 @@ stages:
             deploy:
                 steps:
                 - script: echo deploy ARM template
+- stage: Deploy 2
+  jobs:
+  - deployment: Deploy
+    pool:
+        vmImage: 'windows-latest'
+    environment: 'blog-deployment'
+    strategy:
+        runOnce:
+            deploy:
+                steps:
+                - script: echo deploy ARM template
