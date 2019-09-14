@@ -59,5 +59,5 @@ stages:
                     templateLocation: 'URL of the file'
                     csmFileLink: '$(ArmStorageUri)maintemplate.json$(ArmStorageSasToken)'
                     csmParametersFileLink: '$(ArmStorageUri)maintemplate.parameters.json$(ArmStorageSasToken)'
-                    overrideParameters: '-mssqlAdminLogin "$(Database.Login)" -mssqlAdminPassword "$(Database.Password)"'
+                    overrideParameters: '-storageSasToken "$(ArmStorageSasToken)" -storageUri "$(ArmStorageUri)" -mssqlAdminLogin "$(Database.Login)" -mssqlAdminPassword "$(Database.Password)"'
                     deploymentMode: 'Incremental'
