@@ -1,1 +1,19 @@
-## here we copy all templates to artifact
+stages:
+- stage: Build
+  jobs:
+  - job: BuildJob
+    pool:
+        vmImage: 'windows-latest'
+    steps:
+    - script: echo Building!
+- stage: Deploy
+  jobs:
+  - deployment: Deploy
+    pool:
+        vmImage: 'windows-latest'
+    environment: 'blog-deployment'
+    strategy:
+        runOnce:
+            deploy:
+                steps:
+                - script: echo deploy ARM template
