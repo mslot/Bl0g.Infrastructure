@@ -46,7 +46,7 @@ stages:
                     SourcePath: '$(Release.Template.Arm.Source.Path)'
                     azureSubscription: 'blog-connection'
                     Destination: 'AzureBlob'
-                    storage: '$(Release.Template.Storage.Name)'
+                    storage: '$(Release.Template.Storage.Name)$(Env)'
                     ContainerName: 'arm'
                     outputStorageUri: 'armStorageUri'
                     outputStorageContainerSasToken: 'armStorageSasToken'
