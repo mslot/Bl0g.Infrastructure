@@ -1,1 +1,42 @@
-## here we copy all templates to artifact
+stages:
+- stage: Build
+  variables:
+  - group: Bl0g.Infrastructure.Build
+  jobs:
+  - job: BuildJob
+    pool:
+        vmImage: 'windows-latest'
+    steps:
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: $(Build.ARM.Source.Path)
+        Contents: '**\*.json'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+- stage: Deploy
+  variables:
+  - group: Bl0g.Infrastructure.Release
+  jobs:
+  - deployment: Deploy
+    pool:
+        vmImage: 'windows-latest'
+    environment: 'blog-deployment'
+    strategy:
+        runOnce:
+            deploy:
+                steps:
+                - task: AzureResourceGroupDeployment@2
+                  inputs:
+                    azureSubscription: '$(Release.Subscription)'
+                    action: 'Create Or Update Resource Group'
+                    resourceGroupName: '$(Release.ResourceGroup.Name)'
+                    location: '$(Release.Location)'
+                    templateLocation: 'Linked artifact'
+                    csmFile: '$(Release.Template.Path)'
+                    csmParametersFile: '$(Release.Template.Parameters.Path)'
+                    overrideParameters: '$(Release.Template.Parameters.Overrides)'
+                    deploymentMode: 'Incremental'
