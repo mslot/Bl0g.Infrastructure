@@ -43,7 +43,7 @@ stages:
                     deploymentMode: 'Incremental'
                 - task: AzureFileCopy@3
                   inputs:
-                    SourcePath: '$(Pipeline.Workspace)\drop'
+                    SourcePath: '$(Release.Template.Arm.Source.Path)'
                     azureSubscription: 'blog-connection'
                     Destination: 'AzureBlob'
                     storage: '$(Release.Template.Storage.Name)'
