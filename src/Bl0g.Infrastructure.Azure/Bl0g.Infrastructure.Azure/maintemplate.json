@@ -28,8 +28,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[uri(deployment().properties.templateLink.uri,concat('SubTemplates/ContainerOrchestration/aks.json',parameters('storageSasToken')))]",
-          "contentVersion": "1.0.0.0"
+          "uri": "[uri(deployment().properties.templateLink.uri,concat('SubTemplates/ContainerOrchestration/aks.json',parameters('storageSasToken')))]"
         },
         "parameters": {
 
@@ -43,8 +42,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[uri(deployment().properties.templateLink.uri,concat('SubTemplates/Databases/mssql.json',parameters('storageSasToken')))]",
-          "contentVersion": "1.0.0.0"
+          "uri": "[uri(deployment().properties.templateLink.uri,concat('SubTemplates/Databases/mssql.json',parameters('storageSasToken')))]"
         },
         "parameters": {
 
