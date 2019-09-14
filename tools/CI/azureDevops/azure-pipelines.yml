@@ -1,5 +1,6 @@
 variables:
-- group: Bl0g.Infrastructure
+- group: Bl0g.Infrastructure.Build
+- group: Bl0g.Infrastructure.Release
 stages:
 - stage: Build
   jobs:
@@ -9,7 +10,7 @@ stages:
     steps:
     - task: CopyFiles@2
       inputs:
-        SourceFolder: $(ARM.Source.Path)
+        SourceFolder: $(Build.ARM.Source.Path)
         Contents: '**\*.json'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
     - task: PublishBuildArtifacts@1
@@ -17,3 +18,24 @@ stages:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'drop'
         publishLocation: 'Container'
+- stage: Deploy
+  jobs:
+  - deployment: Deploy
+    pool:
+        vmImage: 'windows-latest'
+    environment: 'blog-deployment'
+    strategy:
+        runOnce:
+            deploy:
+                steps:
+                - task: AzureResourceGroupDeployment@2
+                  inputs:
+                    azureSubscription: '$(Release.Subscription)'
+                    action: 'Create Or Update Resource Group'
+                    resourceGroupName: '$(Release.ResourceGroup.Name)'
+                    location: '$(Release.Location)'
+                    templateLocation: 'Linked artifact'
+                    csmFile: '$(Release.Template.Path)'
+                    csmParametersFile: '$(Release.Template.Parameters.Path)'
+                    overrideParameters: '$(Release.Template.Parameters.Overrides)'
+                    deploymentMode: 'Incremental'
