@@ -26,10 +26,10 @@
     //"mssqlAdminPassword": {
     //  "value": null
     //},
-    "serverName": {
+    "mssqlServerName": {
       "value": "blog-server"
     },
-    "skuName": {
+    "mssqlSkuName": {
       "value": "S0"
     },
     "mssqlDatabaseName": {
