@@ -2,6 +2,9 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "storagename": {
+      "type": "string"
+    },
     "env": {
       "type": "string",
       "defaultValue": "prd"
@@ -19,7 +22,7 @@
     }
   },
   "variables": {
-    "azuretemplateStorageName": "[concat('azuretemplatestorage', parameters('env'))]",
+    "azuretemplateStorageName": "[concat(parameters('storagename'), parameters('env'))]",
     "azuretemplateStorageResourceId": "[resourceId('Microsoft.Storage/storageAccounts',variables('azuretemplateStorageName'))]"
   },
   "resources": [
