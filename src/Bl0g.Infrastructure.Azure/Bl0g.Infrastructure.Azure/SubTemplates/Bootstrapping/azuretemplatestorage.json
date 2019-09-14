@@ -6,8 +6,7 @@
       "type": "string"
     },
     "env": {
-      "type": "string",
-      "defaultValue": "prd"
+      "type": "string"
     },
     "azuretemplateType": {
       "type": "string",
