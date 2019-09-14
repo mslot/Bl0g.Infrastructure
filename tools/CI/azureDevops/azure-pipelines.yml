@@ -1,3 +1,5 @@
+variables:
+- group: Bl0g.Infrastructure
 stages:
 - stage: Build
   jobs:
@@ -7,7 +9,7 @@ stages:
     steps:
     - task: CopyFiles@2
       inputs:
-        SourceFolder: 'src/Bl0g.Infrastructure.Azure/Bl0g.Infrastructure.Azure'
+        SourceFolder: $(ARM.Source.Path)
         Contents: '**\*.json'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
     - task: PublishBuildArtifacts@1
@@ -15,14 +17,3 @@ stages:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'drop'
         publishLocation: 'Container'
-- stage: Deploy
-  jobs:
-  - deployment: Deploy
-    pool:
-        vmImage: 'windows-latest'
-    environment: 'blog-deployment-dev'
-    strategy:
-        runOnce:
-            deploy:
-                steps:
-                - script: echo deploy ARM template
