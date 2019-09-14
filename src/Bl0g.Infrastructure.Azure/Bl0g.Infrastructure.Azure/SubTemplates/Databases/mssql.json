@@ -48,7 +48,7 @@
           "location": "[resourceGroup().location]",
           "apiVersion": "2014-04-01-preview",
           "dependsOn": [
-            "[resourceId('Microsoft.Sql/servers', variables('databaseName'))]"
+            "[resourceId('Microsoft.Sql/servers', variables('serverName'))]"
           ],
           "properties": {
             "startIpAddress": "0.0.0.0",
