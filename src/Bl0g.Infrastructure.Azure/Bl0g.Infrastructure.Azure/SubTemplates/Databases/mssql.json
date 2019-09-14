@@ -76,7 +76,7 @@
   "outputs": {
     "connectionstring": {
       "type": "string",
-      "value": "[concat('Server=tcp:',reference(parameters('serverName')).fullyQualifiedDomainName,',1433;Initial Catalog=',parameters('databaseName'),';Persist Security Info=False;User ID=',parameters('adminLogin'),';Password=',parameters('adminPassword'),';MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;')]"
+      "value": "[concat('Server=tcp:',reference(variables('serverName')).fullyQualifiedDomainName,',1433;Initial Catalog=',variables('databaseName'),';Persist Security Info=False;User ID=',parameters('adminLogin'),';Password=',parameters('adminPassword'),';MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;')]"
     }
   }
 }
