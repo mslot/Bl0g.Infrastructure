@@ -23,7 +23,7 @@
   <Import Condition=" Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Deployment\1.1\DeploymentProject.targets') " Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Deployment\1.1\DeploymentProject.targets" />
   <!-- vertag<:>end -->
   <ItemGroup>
-    <None Include="SubTemplates\Bootstraping\azuretemplatestorage.dev.parameters.json" />
+    <None Include="SubTemplates\Bootstraping\azuretemplatestorage.parameters.json" />
     <None Include="SubTemplates\Bootstraping\azuretemplatestorage.json" />
     <None Include="SubTemplates\ContainerOrchestration\aks.json" />
     <None Include="SubTemplates\Databases\mssql.json" />
@@ -31,7 +31,7 @@
       <Visible>False</Visible>
     </None>
     <Content Include="README.md" />
-    <None Include="maintemplate.dev.parameters.json" />
+    <None Include="maintemplate.parameters.json" />
     <None Include="maintemplate.json" />
     <None Include="SubTemplates\Serverfarms\serverfarm.standard.json" />
     <None Include="SubTemplates\WebApps\webapp.json" />

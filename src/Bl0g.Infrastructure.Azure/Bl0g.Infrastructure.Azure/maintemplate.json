@@ -117,7 +117,7 @@
     },
     "env": {
       "type": "string",
-      "defaultValue": "dev"
+      "defaultValue": "prd"
     },
     "storageSasToken": {
       "type": "string"
