@@ -128,7 +128,8 @@
   },
   "variables": {
     "azuretemplatestoragename": "[concat('azuretemplatestorage',parameters('env'))]",
-    "azuretemplatestorageurl": "[parameters('storageUri')]"
+    "azuretemplatestorageurl": "[parameters('storageUri')]",
+    "location": "resourceGroup().location"
   },
   "resources": [
     //{
@@ -172,7 +173,8 @@
           "collation": { "value": "[parameters('mssqlCollation')]" },
           "skuName": { "value": "[parameters('mssqlSkuName')]" },
           "serverName": { "value": "[parameters('mssqlServerName')]" },
-          "env": { "value": "[parameters('env')]" }
+          "env": { "value": "[parameters('env')]" },
+          "location": { "value": "[variables('location')]" }
         }
       }
     }

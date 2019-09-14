@@ -24,6 +24,9 @@
     },
     "serverName": {
       "type": "string"
+    },
+    "location": {
+      "type": "string"
     }
   },
   "variables": {
@@ -34,7 +37,7 @@
     {
       "name": "[variables('serverName')]",
       "type": "Microsoft.Sql/servers",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "apiVersion": "2014-04-01-preview",
       "dependsOn": [],
       "properties": {
@@ -45,7 +48,7 @@
         {
           "name": "AllowAllWindowsAzureIps",
           "type": "firewallrules",
-          "location": "[resourceGroup().location]",
+          "location": "[parameters('location')]",
           "apiVersion": "2014-04-01-preview",
           "dependsOn": [
             "[resourceId('Microsoft.Sql/servers', variables('serverName'))]"
@@ -58,7 +61,7 @@
         {
           "name": "[variables('databaseName')]",
           "type": "databases",
-          "location": "[resourceGroup().location]",
+          "location": "[parameters('location')]",
           "apiVersion": "2017-10-01-preview",
           "dependsOn": [
             "[resourceId('Microsoft.Sql/servers', variables('serverName'))]"
