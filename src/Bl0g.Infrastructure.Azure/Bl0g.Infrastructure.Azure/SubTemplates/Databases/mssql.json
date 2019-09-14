@@ -61,7 +61,7 @@
           "location": "[resourceGroup().location]",
           "apiVersion": "2017-10-01-preview",
           "dependsOn": [
-            "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]"
+            "[resourceId('Microsoft.Sql/servers', variables('serverName'))]"
           ],
           "sku": {
             "name": "[parameters('skuName')]"
