@@ -128,7 +128,7 @@
   "variables": {
     "azuretemplatestoragename": "[concat('azuretemplatestorage',parameters('env'))]",
     "azuretemplatestorageurl": "[parameters('storageUri')]",
-    "location": "resourceGroup().location"
+    "location": "[resourceGroup().location]"
   },
   "resources": [
     //{
