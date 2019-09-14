@@ -18,12 +18,10 @@ stages:
         ArtifactName: 'drop'
         publishLocation: 'Container'
 - stage: Deploy
+  variables:
+    - group: Bl0g.Infrastructure.Release
   jobs:
   - deployment: Deploy
-    variables:
-    - group: Bl0g.Infrastructure.Release
-    - name: CONNECTION
-      value: 'blog-connection'
     pool:
         vmImage: 'windows-latest'
     environment: 'blog-deployment'
@@ -33,7 +31,7 @@ stages:
                 steps:
                 - task: AzureResourceGroupDeployment@2
                   inputs:
-                    azureSubscription: $(CONNECTION)
+                    azureSubscription: 'test-for-build'
                     action: 'Create Or Update Resource Group'
                     resourceGroupName: $(Release.ResourceGroup.Name)
                     location: $(Release.Location)
