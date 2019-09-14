@@ -19,6 +19,7 @@ stages:
         publishLocation: 'Container'
 - stage: Deploy
   variables:
+    - group: Bl0g
     - group: Bl0g.Production
     - group: Bl0g.Infrastructure.Bootstrap.Release
   jobs:
