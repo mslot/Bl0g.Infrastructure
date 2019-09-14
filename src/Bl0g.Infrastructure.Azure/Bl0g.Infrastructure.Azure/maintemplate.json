@@ -2,7 +2,24 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "parameterTest": {
+    "mssqlAdminLogin": {
+      "type": "string"
+    },
+    "mssqlAdminPassword": {
+      "type": "securestring"
+    },
+    "mssqlDatabaseName": {
+      "type": "string"
+    },
+    "mssqlCollation": {
+      "type": "string",
+      "defaultValue": "SQL_Latin1_General_CP1_CI_AS"
+    },
+    "mssqlSkuName": {
+      "type": "string",
+      "defaultValue": "B"
+    },
+    "mssqlServerName": {
       "type": "string"
     },
     "env": {
@@ -31,7 +48,7 @@
           "uri": "[uri(deployment().properties.templateLink.uri,concat('SubTemplates/ContainerOrchestration/aks.json',parameters('storageSasToken')))]"
         },
         "parameters": {
-
+          "farmResourceId": { "value": "[reference('serverfarmDeploy').outputs.resourceId.value]" }
         }
       }
     },
@@ -45,11 +62,21 @@
           "uri": "[uri(deployment().properties.templateLink.uri,concat('SubTemplates/Databases/mssql.json',parameters('storageSasToken')))]"
         },
         "parameters": {
-
+          "adminLogin": { "value": "[parameters('mssqlAdminLogin')]" },
+          "adminPassword": { "value": "[parameters('mssqlAdminPassword')]" },
+          "databaseName": { "value": "[parameters('mssqlDatabaseName')]" },
+          "collation": { "value": "[parameters('mssqlCollation')]" },
+          "skuName": { "value": "[parameters('mssqlSkuName')]" },
+          "serverName": { "value": "[parameters('mssqlServerName')]" }
         }
       }
     }
   ],
   "outputs": {
+    "mssqlConnectionstring": {
+      "type": "string",
+      "value": "[reference('databaseDeploy').outputs.connectionstring.value]"
+
+    }
   }
 }
