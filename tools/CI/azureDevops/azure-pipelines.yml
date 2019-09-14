@@ -1,8 +1,7 @@
-variables:
-- group: Bl0g.Infrastructure.Build
-- group: Bl0g.Infrastructure.Release
 stages:
 - stage: Build
+  variables:
+  - group: Bl0g.Infrastructure.Build
   jobs:
   - job: BuildJob
     pool:
@@ -19,6 +18,8 @@ stages:
         ArtifactName: 'drop'
         publishLocation: 'Container'
 - stage: Deploy
+  variables:
+  - group: Bl0g.Infrastructure.Release
   jobs:
   - deployment: Deploy
     pool:
