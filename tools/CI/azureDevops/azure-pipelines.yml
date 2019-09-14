@@ -29,15 +29,6 @@ stages:
         runOnce:
             deploy:
                 steps:
-                - task: DownloadBuildArtifacts@0
-                  inputs:
-                    buildType: 'specific'
-                    project: 'a6768e0f-5075-44bf-851e-c28d44781661'
-                    pipeline: '22'
-                    artifactName: 'drop'
-                    buildVersionToDownload: 'latest'
-                    downloadType: 'single'
-                    downloadPath: '$(System.ArtifactsDirectory)'
                 - task: AzureResourceGroupDeployment@2
                   inputs:
                     azureSubscription: 'blog-connection'
@@ -45,7 +36,7 @@ stages:
                     resourceGroupName: $(Release.ResourceGroup.Name)
                     location: $(Release.Location)
                     templateLocation: 'Linked artifact'
-                    csmFile: '$(System.ArtifactsDirectory)\drop\SubTemplates\Bootstrapping\azuretemplatestorage.json'
-                    csmParametersFile: '$(System.ArtifactsDirectory)\drop\SubTemplates\Bootstrapping\azuretemplatestorage.json'
+                    csmFile: '$(System.WorkFolder)\drop\SubTemplates\Bootstrapping\azuretemplatestorage.json'
+                    csmParametersFile: '$(System.WorkFolder)\drop\SubTemplates\Bootstrapping\azuretemplatestorage.json'
                     overrideParameters: ''
                     deploymentMode: 'Incremental'
