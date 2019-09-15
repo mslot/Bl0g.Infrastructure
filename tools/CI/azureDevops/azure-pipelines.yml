@@ -23,10 +23,10 @@ stages:
     - group: Bl0g.Production
     - group: Bl0g.Infrastructure.Bootstrap.Release
   jobs:
-  - deployment: Deploy environmental resources
+  - deployment: Deploy production resources
     pool:
         vmImage: 'windows-latest'
-    environment: 'blog-deployment'
+    environment: 'blog-deployment-production'
     strategy:
         runOnce:
             deploy:
