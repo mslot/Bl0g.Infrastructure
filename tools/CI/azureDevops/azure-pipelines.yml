@@ -17,16 +17,17 @@ stages:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'drop'
         publishLocation: 'Container'
-- stage: Deploy
+        
+- stage: DeployProduction
   variables:
     - group: Bl0g
-    - group: Bl0g.Production
     - group: Bl0g.Infrastructure.Bootstrap.Release
+    - group: Bl0g.Production
   jobs:
-  - deployment: Deploy environmental resources
+  - deployment: DeployResources
     pool:
         vmImage: 'windows-latest'
-    environment: 'blog-deployment'
+    environment: 'blog-deployment-production'
     strategy:
         runOnce:
             deploy:
@@ -47,10 +48,11 @@ stages:
                     SourcePath: '$(Release.Template.Arm.Source.Path)'
                     azureSubscription: 'blog-connection'
                     Destination: 'AzureBlob'
-                    storage: '$(Release.Template.Storage.Name)$(Env)'
+                    storage: '$(Release.Template.Storage.Name)'
                     ContainerName: 'arm'
                     outputStorageUri: 'ArmStorageUri'
                     outputStorageContainerSasToken: 'ArmStorageSasToken'
+                    sasTokenTimeOutInMinutes: '10'
                 - task: AzureResourceGroupDeployment@2
                   inputs:
                     azureSubscription: 'blog-connection'
@@ -60,5 +62,16 @@ stages:
                     templateLocation: 'URL of the file'
                     csmFileLink: '$(ArmStorageUri)environmental.resources.template.json$(ArmStorageSasToken)'
                     csmParametersFileLink: '$(ArmStorageUri)environmental.resources.template.parameters.json$(ArmStorageSasToken)'
-                    overrideParameters: '-storageSasToken "$(ArmStorageSasToken)" -storageUri "$(ArmStorageUri)" -mssqlAdminLogin "$(Database.Login)" -mssqlAdminPassword "$(Database.Password)"'
+                    overrideParameters: '-mssqlPrefix "$(Blog.Prefix)" -env "$(Env)" -storageSasToken "$(ArmStorageSasToken)" -storageUri "$(ArmStorageUri)" -mssqlAdminLogin "$(Database.Login)" -mssqlAdminPassword "$(Database.Password)"'
+                    deploymentMode: 'Incremental'
+                - task: AzureResourceGroupDeployment@2
+                  inputs:
+                    azureSubscription: 'blog-connection'
+                    action: 'Create Or Update Resource Group'
+                    resourceGroupName: '$(Release.ResourceGroup.Name)'
+                    location: '$(Release.Location)'
+                    templateLocation: 'URL of the file'
+                    csmFileLink: '$(ArmStorageUri)cluster.template.json$(ArmStorageSasToken)'
+                    csmParametersFileLink: '$(ArmStorageUri)cluster.template.parameters.json$(ArmStorageSasToken)'
+                    overrideParameters: '-clusterPrefix "$(Blog.Prefix)" -servicePrincipalClientSecret "$(Cluster.ServicePrincipalClientSecret)" -servicePrincipalClientId "$(Cluster.ServicePrincipalClientId)" -sshRSAPublicKey "$(Cluster.SshRSAPublicKey)" -linuxAdminUsername "$(Cluster.AdminUsername)" -dnsPrefix "$(Cluster.DnsPrefix)" -clusterName "$(Cluster.Name)" -storageSasToken "$(ArmStorageSasToken)" -storageUri "$(ArmStorageUri)"'
                     deploymentMode: 'Incremental'
