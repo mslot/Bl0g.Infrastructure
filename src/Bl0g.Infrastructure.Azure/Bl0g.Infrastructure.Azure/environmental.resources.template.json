@@ -2,7 +2,7 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "mssqlPrefix": {
+    "prefix": {
       "type": "string"
     },
     "mssqlAdminLogin": {
@@ -48,9 +48,9 @@
     "location": "[resourceGroup().location]",
     "azuretemplatestoragename": "[concat('azuretemplatestorage',parameters('env'))]",
     "azuretemplatestorageurl": "[parameters('storageUri')]",
-    "mssqlServerName": "[concat(parameters('mssqlPrefix'),'-',parameters('mssqlServerName'),'-',parameters('env'))]",
-    "dockerRegistryName": "[concat(parameters('mssqlPrefix'),'-',parameters('dockerRegistryName'),'-',parameters('env'))]",
-    "mssqlDatabaseName": "[concat(parameters('mssqlPrefix'),'-',parameters('mssqlDatabaseName'),'-',parameters('env'))]"
+    "mssqlServerName": "[concat(parameters('prefix'),'-',parameters('mssqlServerName'),'-',parameters('env'))]",
+    "dockerRegistryName": "[concat(parameters('prefix'),parameters('dockerRegistryName'),parameters('env'))]",
+    "mssqlDatabaseName": "[concat(parameters('prefix'),'-',parameters('mssqlDatabaseName'),'-',parameters('env'))]"
   },
   "resources": [
     {
