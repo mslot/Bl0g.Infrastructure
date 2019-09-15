@@ -17,7 +17,7 @@ stages:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'drop'
         publishLocation: 'Container'
-- stage: Deploy Prouction
+- stage: DeployProduction
   variables:
     - group: Bl0g
     - group: Bl0g.Production
