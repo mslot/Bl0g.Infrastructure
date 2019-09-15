@@ -77,5 +77,5 @@ stages:
                     templateLocation: 'URL of the file'
                     csmFileLink: '$(ArmStorageUri)cluster.template.json$(ArmStorageSasToken)'
                     csmParametersFileLink: '$(ArmStorageUri)cluster.template.parameters.json$(ArmStorageSasToken)'
-                    overrideParameters: '-aksPrefix "$(Blog.Prefix)" -aksServicePrincipalClientSecret "$(Cluster.ServicePrincipalClientSecret)" -aksServicePrincipalClientId "$(Cluster.ServicePrincipalClientId)" -aksSshRSAPublicKey "$(Cluster.SshRSAPublicKey)" -aksLinuxAdminUsername "$(Cluster.AdminUsername)" -aksDnsPrefix "$(Cluster.DnsPrefix)" -aksClusterName "$(Cluster.Name)" -storageSasToken "$(ArmStorageSasToken)" -storageUri "$(ArmStorageUri)"'
+                    overrideParameters: '-aksPrefix "$(Blog.Prefix)" -aksServicePrincipalClientSecret "$(Cluster.ServicePrincipalClientSecret)" -aksServicePrincipalClientId "$(Cluster.ServicePrincipalClientId)" -aksSshRSAPublicKey "$(Cluster.SshRSAPublicKey)" -aksLinuxAdminUsername "$(Cluster.AdminUsername)" -aksDnsPrefix "$(Cluster.DnsPrefix)" -aksClusterName "$(Cluster.Name)" -storageSasToken "$(ArmStorageSasToken)" -storageUri "$(ArmStorageUri)" -env "$(Env)"'
                     deploymentMode: 'Incremental'
