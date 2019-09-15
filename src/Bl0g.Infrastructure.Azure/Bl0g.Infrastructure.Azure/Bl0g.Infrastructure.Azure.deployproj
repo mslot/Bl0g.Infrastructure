@@ -32,7 +32,6 @@
     <None Include="Deployment.targets">
       <Visible>False</Visible>
     </None>
-    <Content Include="README.md" />
     <None Include="environmental.resources.template.parameters.json" />
     <None Include="environmental.resources.template.json" />
     <None Include="SubTemplates\Serverfarms\serverfarm.standard.json" />
