@@ -66,7 +66,7 @@ stages:
                     templateLocation: 'URL of the file'
                     csmFileLink: '$(ArmStorageUri)environmental.resources.template.json$(ArmStorageSasToken)'
                     csmParametersFileLink: '$(ArmStorageUri)environmental.resources.template.parameters.json$(ArmStorageSasToken)'
-                    overrideParameters: '-mssqlPrefix "$(Blog.Prefix)" -env "$(Env)" -storageSasToken "$(ArmStorageSasToken)" -storageUri "$(ArmStorageUri)" -mssqlAdminLogin "$(Database.Login)" -mssqlAdminPassword "$(Database.Password)"'
+                    overrideParameters: '-dockerRegistrySku "$(Docker.Registry.Sku)" -dockerRegistryAdminUserEnabled "$(Docker.Registry.AdminUserEnabled)" -dockerRegistryName "$(Docker.Registry.Name)" -mssqlPrefix "$(Blog.Prefix)" -env "$(Env)" -storageSasToken "$(ArmStorageSasToken)" -storageUri "$(ArmStorageUri)" -mssqlAdminLogin "$(Database.Login)" -mssqlAdminPassword "$(Database.Password)"'
                     deploymentMode: 'Incremental'
                 - task: AzureResourceGroupDeployment@2
                   inputs:
