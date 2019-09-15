@@ -5,9 +5,6 @@
     "storagename": {
       "type": "string"
     },
-    "env": {
-      "type": "string"
-    },
     "azuretemplateType": {
       "type": "string",
       "defaultValue": "Standard_LRS",
@@ -21,12 +18,11 @@
     }
   },
   "variables": {
-    "azuretemplateStorageName": "[concat(parameters('storagename'), parameters('env'))]",
-    "azuretemplateStorageResourceId": "[resourceId('Microsoft.Storage/storageAccounts',variables('azuretemplateStorageName'))]"
+    "azuretemplateStorageResourceId": "[resourceId('Microsoft.Storage/storageAccounts',parameters('storageName'))]"
   },
   "resources": [
     {
-      "name": "[variables('azuretemplateStorageName')]",
+      "name": "[parameters('storageName')]",
       "type": "Microsoft.Storage/storageAccounts",
       "location": "[resourceGroup().location]",
       "apiVersion": "2016-01-01",
@@ -43,7 +39,7 @@
   "outputs": {
     "storageUrl": {
       "type": "string",
-      "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('azuretemplateStorageName'), ';AccountKey=', listKeys(variables('azuretemplateStorageResourceId'),'2015-05-01-preview').key1)]"
+      "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storageName'), ';AccountKey=', listKeys(variables('azuretemplateStorageResourceId'),'2015-05-01-preview').key1)]"
     }
   }
 }
