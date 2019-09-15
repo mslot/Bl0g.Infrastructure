@@ -28,6 +28,7 @@
     <None Include="SubTemplates\Bootstrapping\azuretemplatestorage.parameters.json" />
     <None Include="SubTemplates\Bootstrapping\azuretemplatestorage.json" />
     <None Include="SubTemplates\ContainerOrchestration\aks.json" />
+    <None Include="SubTemplates\ContainerRegistry\dockerRegistry.json" />
     <None Include="SubTemplates\Databases\mssql.json" />
     <None Include="Deployment.targets">
       <Visible>False</Visible>

@@ -33,6 +33,15 @@
     },
     "storageUri": {
       "type": "string"
+    },
+    "dockerRegistryName": {
+      "type": "string"
+    },
+    "dockerRegistryAdminUserEnabled": {
+      "type": "bool"
+    },
+    "dockerRegistrySku": {
+      "type": "string"
     }
   },
   "variables": {
@@ -40,9 +49,27 @@
     "azuretemplatestoragename": "[concat('azuretemplatestorage',parameters('env'))]",
     "azuretemplatestorageurl": "[parameters('storageUri')]",
     "mssqlServerName": "[concat(parameters('mssqlPrefix'),'-',parameters('mssqlServerName'),'-',parameters('env'))]",
+    "dockerRegistryName": "[concat(parameters('mssqlPrefix'),'-',parameters('dockerRegistryName'),'-',parameters('env'))]",
     "mssqlDatabaseName": "[concat(parameters('mssqlPrefix'),'-',parameters('mssqlDatabaseName'),'-',parameters('env'))]"
   },
   "resources": [
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "name": "containerRegistryDeploy",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[uri(deployment().properties.templateLink.uri,concat('SubTemplates/ContainerRegistry/dockerRegistry.json',parameters('storageSasToken')))]"
+        },
+        "parameters": {
+          "location": { "value": "[variables('location')]" },
+          "acrName": { "value": "[variables('dockerRegistryName')]" },
+          "acrAdminUserEnabled": { "value": "[parameters('dockerRegistryAdminUserEnabled')]" },
+          "acrSku": { "value": "[parameters('dockerRegistrySku')]" }
+        }
+      }
+    },
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
@@ -68,7 +95,10 @@
     "mssqlConnectionstring": {
       "type": "string",
       "value": "[reference('databaseDeploy').outputs.connectionstring.value]"
-
+    },
+    "dockerRegistryLoginServer": {
+      "type": "string",
+      "value": "[reference('containerRegistryDeploy').outputs.acrLoginServer.value]"
     }
   }
 }
