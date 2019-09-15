@@ -7,7 +7,6 @@
     },
     "aksClusterName": {
       "type": "string",
-      "defaultValue": "aks101cluster",
       "metadata": {
         "description": "The name of the Managed Cluster resource."
       }
@@ -45,7 +44,7 @@
     },
     "aksAgentVMSize": {
       "type": "string",
-      "defaultValue": "Standard_DS2_v2",
+      "defaultValue": "B2s",
       "metadata": {
         "description": "The size of the Virtual Machine."
       }
@@ -120,7 +119,6 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
       "name": "aksDeploy",
-      "dependsOn": [ "databaseDeploy" ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
