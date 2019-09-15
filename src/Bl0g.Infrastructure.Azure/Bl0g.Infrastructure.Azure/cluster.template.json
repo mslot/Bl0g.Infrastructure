@@ -2,6 +2,9 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "clusterPrefix": {
+      "type": "string"
+    },
     "aksClusterName": {
       "type": "string",
       "defaultValue": "aks101cluster",
@@ -108,7 +111,9 @@
   "variables": {
     "azuretemplatestoragename": "[concat('azuretemplatestorage',parameters('env'))]",
     "azuretemplatestorageurl": "[parameters('storageUri')]",
-    "location": "[resourceGroup().location]"
+    "location": "[resourceGroup().location]",
+    "aksDnsPrefix": "[concat(parameters('clusterPrefix'),'-', parameters('aksDnsPrefix'))]",
+    "aksClusterName": "[concat(parameters('clusterPrefix'),'-', parameters('aksClusterName'))]"
   },
   "resources": [
     {
@@ -122,7 +127,7 @@
           "uri": "[uri(deployment().properties.templateLink.uri,concat('SubTemplates/ContainerOrchestration/aks.json',parameters('storageSasToken')))]"
         },
         "parameters": {
-          "clusterName": { "value": "[parameters('aksClusterName')]" },
+          "clusterName": { "value": "[variables('aksClusterName')]" },
           "location": { "value": "[parameters('aksLocation')]" },
           "osDiskSizeGB": { "value": "[parameters('aksOsDiskSizeGB')]" },
           "agentCount": { "value": "[parameters('aksAgentCount')]" },
@@ -132,6 +137,7 @@
           "servicePrincipalClientId": { "value": "[parameters('aksServicePrincipalClientId')]" },
           "servicePrincipalClientSecret": { "value": "[parameters('aksServicePrincipalClientSecret')]" },
           "osType": { "value": "[parameters('aksOsType')]" },
+          "dnsPrefix": { "value": "[variables('aksDnsPrefix')]" },
           "kubernetesVersion": { "value": "[parameters('aksKubernetesVersion')]" }
         }
       }

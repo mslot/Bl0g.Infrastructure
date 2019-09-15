@@ -20,10 +20,7 @@
     "servicePrincipalClientSecret": {
       "value": null
     },
-    "mssqlAdminLogin": {
-      "value": null
-    },
-    "mssqlAdminPassword": {
+    "clusterPrefix": {
       "value": null
     }
   }

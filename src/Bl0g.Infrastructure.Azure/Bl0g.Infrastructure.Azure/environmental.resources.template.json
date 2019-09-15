@@ -2,6 +2,9 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "mssqlPrefix": {
+      "type": "string"
+    },
     "mssqlAdminLogin": {
       "type": "string"
     },
@@ -33,9 +36,11 @@
     }
   },
   "variables": {
+    "location": "[resourceGroup().location]",
     "azuretemplatestoragename": "[concat('azuretemplatestorage',parameters('env'))]",
     "azuretemplatestorageurl": "[parameters('storageUri')]",
-    "location": "[resourceGroup().location]"
+    "mssqlServerName": "[concat(parameters('mssqlPrefix'),'-',parameters('mssqlServerName'),'-',parameters('env'))]",
+    "mssqlDatabaseName": "[concat(parameters('mssqlPrefix'),'-',parameters('mssqlDatabaseName'),'-',parameters('env'))]"
   },
   "resources": [
     {
@@ -50,10 +55,10 @@
         "parameters": {
           "adminLogin": { "value": "[parameters('mssqlAdminLogin')]" },
           "adminPassword": { "value": "[parameters('mssqlAdminPassword')]" },
-          "databaseName": { "value": "[parameters('mssqlDatabaseName')]" },
+          "databaseName": { "value": "[variables('mssqlDatabaseName')]" },
           "collation": { "value": "[parameters('mssqlCollation')]" },
           "skuName": { "value": "[parameters('mssqlSkuName')]" },
-          "serverName": { "value": "[parameters('mssqlServerName')]" },
+          "serverName": { "value": "[variables('mssqlServerName')]" },
           "env": { "value": "[parameters('env')]" },
           "location": { "value": "[variables('location')]" }
         }

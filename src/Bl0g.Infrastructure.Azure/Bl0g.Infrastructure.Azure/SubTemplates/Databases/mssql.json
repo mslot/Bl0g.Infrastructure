@@ -2,9 +2,6 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "env": {
-      "type": "string"
-    },
     "adminLogin": {
       "type": "string"
     },
@@ -29,13 +26,9 @@
       "type": "string"
     }
   },
-  "variables": {
-    "databaseName": "[concat(parameters('databaseName'),'-',parameters('env'))]",
-    "serverName": "[concat(parameters('serverName'),'-',parameters('env'))]"
-  },
   "resources": [
     {
-      "name": "[variables('serverName')]",
+      "name": "[parameters('serverName')]",
       "type": "Microsoft.Sql/servers",
       "location": "[parameters('location')]",
       "apiVersion": "2014-04-01-preview",
@@ -51,7 +44,7 @@
           "location": "[parameters('location')]",
           "apiVersion": "2014-04-01-preview",
           "dependsOn": [
-            "[resourceId('Microsoft.Sql/servers', variables('serverName'))]"
+            "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]"
           ],
           "properties": {
             "startIpAddress": "0.0.0.0",
@@ -59,12 +52,12 @@
           }
         },
         {
-          "name": "[variables('databaseName')]",
+          "name": "[parameters('databaseName')]",
           "type": "databases",
           "location": "[parameters('location')]",
           "apiVersion": "2017-10-01-preview",
           "dependsOn": [
-            "[resourceId('Microsoft.Sql/servers', variables('serverName'))]"
+            "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]"
           ],
           "sku": {
             "name": "[parameters('skuName')]"
@@ -79,7 +72,7 @@
   "outputs": {
     "connectionstring": {
       "type": "string",
-      "value": "[concat('Server=tcp:',reference(variables('serverName')).fullyQualifiedDomainName,',1433;Initial Catalog=',variables('databaseName'),';Persist Security Info=False;User ID=',parameters('adminLogin'),';Password=',parameters('adminPassword'),';MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;')]"
+      "value": "[concat('Server=tcp:',reference(parameters('serverName')).fullyQualifiedDomainName,',1433;Initial Catalog=',parameters('databaseName'),';Persist Security Info=False;User ID=',parameters('adminLogin'),';Password=',parameters('adminPassword'),';MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;')]"
     }
   }
 }
