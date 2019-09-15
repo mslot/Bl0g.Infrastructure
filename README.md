@@ -6,9 +6,7 @@ More to come when the basic AKS and Cloudflare is integrated.
 ## Still early alpha
 I know this is still early alpha so I have NOT attached a KeyVault to contain password, keys etc. I will do that when this become more stable, but for now I need to have a slim setup, so changes can propagate quickly.
 
-## Azure
-Code for setting up the infrastructure in Azure
-
+# Getting Started
 ## Before deploying first time
 ### SSH generate key
 Generate the ssh key, if you don't have one yet
@@ -34,13 +32,10 @@ Output is of the line
 
 Cluster.ServicePrincipalClientId should be set to appId and Cluster.ServicePrincipalClientSecret to password. This principal is valid for one year.
 
-
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+TODO: describe
+1.	Software dependencies
+2.	Latest releases
+3.	API references
 
 # Build and Test
 TODO: Describe and show how to build your code and run the tests. 
