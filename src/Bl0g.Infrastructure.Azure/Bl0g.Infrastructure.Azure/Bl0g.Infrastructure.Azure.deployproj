@@ -31,8 +31,8 @@
       <Visible>False</Visible>
     </None>
     <Content Include="README.md" />
-    <None Include="maintemplate.parameters.json" />
-    <None Include="maintemplate.json" />
+    <None Include="environmental.resources.template.parameters.json" />
+    <None Include="environmental.resources.template.json" />
     <None Include="SubTemplates\Serverfarms\serverfarm.standard.json" />
     <None Include="SubTemplates\WebApps\webapp.json" />
   </ItemGroup>
