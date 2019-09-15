@@ -44,7 +44,7 @@
     },
     "aksAgentVMSize": {
       "type": "string",
-      "defaultValue": "B2s",
+      "defaultValue": "DS1_v2",
       "metadata": {
         "description": "The size of the Virtual Machine."
       }
