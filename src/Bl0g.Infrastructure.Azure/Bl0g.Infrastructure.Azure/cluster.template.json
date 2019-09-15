@@ -2,7 +2,7 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "clusterPrefix": {
+    "aksPrefix": {
       "type": "string"
     },
     "aksClusterName": {
@@ -112,8 +112,8 @@
     "azuretemplatestoragename": "[concat('azuretemplatestorage',parameters('env'))]",
     "azuretemplatestorageurl": "[parameters('storageUri')]",
     "location": "[resourceGroup().location]",
-    "aksDnsPrefix": "[concat(parameters('clusterPrefix'),'-', parameters('aksDnsPrefix'))]",
-    "aksClusterName": "[concat(parameters('clusterPrefix'),'-', parameters('aksClusterName'))]"
+    "aksDnsPrefix": "[concat(parameters('aksPrefix'),'-', parameters('aksDnsPrefix'))]",
+    "aksClusterName": "[concat(parameters('aksPrefix'),'-', parameters('aksClusterName'))]"
   },
   "resources": [
     {

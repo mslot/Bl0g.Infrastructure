@@ -2,25 +2,25 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "clusterName": {
+    "aksClusterName": {
       "value": null
     },
-    "dnsPrefix": {
+    "aksDnsPrefix": {
       "value": null
     },
-    "linuxAdminUsername": {
+    "aksLinuxAdminUsername": {
       "value": null
     },
-    "sshRSAPublicKey": {
+    "aksSshRSAPublicKey": {
       "value": null
     },
-    "servicePrincipalClientId": {
+    "aksServicePrincipalClientId": {
       "value": null
     },
-    "servicePrincipalClientSecret": {
+    "aksServicePrincipalClientSecret": {
       "value": null
     },
-    "clusterPrefix": {
+    "aksPrefix": {
       "value": null
     }
   }
