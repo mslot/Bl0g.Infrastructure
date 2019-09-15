@@ -59,7 +59,6 @@
           "collation": { "value": "[parameters('mssqlCollation')]" },
           "skuName": { "value": "[parameters('mssqlSkuName')]" },
           "serverName": { "value": "[variables('mssqlServerName')]" },
-          "env": { "value": "[parameters('env')]" },
           "location": { "value": "[variables('location')]" }
         }
       }
