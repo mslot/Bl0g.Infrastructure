@@ -26,7 +26,7 @@ stages:
     - name: "TEMPLATE_STORAGE_NAME"
       value: "$(Blog.Prefix)$(Release.Template.Storage.Name)$(Env)"
     - name: "RESOURCE_GROUP_NAME"
-      value: "$(Blog.Prefix)$(ResourceGroup.Name)-rg"
+      value: "$(Blog.Prefix)-$(ResourceGroup.Name)-rg"
   jobs:
   - deployment: DeployResources
     pool:
@@ -45,7 +45,7 @@ stages:
                     templateLocation: 'Linked artifact'
                     csmFile: '$(Release.Template.Path)'
                     csmParametersFile: '$(Release.Template.Parameters.Path)'
-                    overrideParameters: '-storagename "$(Release.Template.Storage.Name)" -env "$(Env)"'
+                    overrideParameters: '-storagename "$(TEMPLATE_STORAGE_NAME)" -env "$(Env)"'
                     deploymentMode: 'Incremental'
                 - task: AzureFileCopy@3
                   inputs:
