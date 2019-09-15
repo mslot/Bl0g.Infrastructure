@@ -23,6 +23,10 @@ stages:
     - group: Bl0g
     - group: Bl0g.Infrastructure.Bootstrap.Release
     - group: Bl0g.Production
+    - name: "TEMPLATE_STORAGE_NAME"
+      value: "$(Blog.Prefix)$(Release.Template.Storage.Name)$(Env)"
+    - name: "RESOURCE_GROUP_NAME"
+      value: "$(Blog.Prefix)$(Resource.Group.Name)-rg"
   jobs:
   - deployment: DeployResources
     pool:
@@ -36,7 +40,7 @@ stages:
                   inputs:
                     azureSubscription: 'blog-connection'
                     action: 'Create Or Update Resource Group'
-                    resourceGroupName: $(Release.ResourceGroup.Name)
+                    resourceGroupName: $(RESOURCE_GROUP_NAME)
                     location: $(Release.Location)
                     templateLocation: 'Linked artifact'
                     csmFile: '$(Release.Template.Path)'
@@ -48,7 +52,7 @@ stages:
                     SourcePath: '$(Release.Template.Arm.Source.Path)'
                     azureSubscription: 'blog-connection'
                     Destination: 'AzureBlob'
-                    storage: '$(Release.Template.Storage.Name)'
+                    storage: '$(TEMPLATE_STORAGE_NAME)'
                     ContainerName: 'arm'
                     outputStorageUri: 'ArmStorageUri'
                     outputStorageContainerSasToken: 'ArmStorageSasToken'
@@ -57,7 +61,7 @@ stages:
                   inputs:
                     azureSubscription: 'blog-connection'
                     action: 'Create Or Update Resource Group'
-                    resourceGroupName: '$(Release.ResourceGroup.Name)'
+                    resourceGroupName: '$(RESOURCE_GROUP_NAME)'
                     location: '$(Release.Location)'
                     templateLocation: 'URL of the file'
                     csmFileLink: '$(ArmStorageUri)environmental.resources.template.json$(ArmStorageSasToken)'
@@ -68,7 +72,7 @@ stages:
                   inputs:
                     azureSubscription: 'blog-connection'
                     action: 'Create Or Update Resource Group'
-                    resourceGroupName: '$(Release.ResourceGroup.Name)'
+                    resourceGroupName: '$(RESOURCE_GROUP_NAME)'
                     location: '$(Release.Location)'
                     templateLocation: 'URL of the file'
                     csmFileLink: '$(ArmStorageUri)cluster.template.json$(ArmStorageSasToken)'
