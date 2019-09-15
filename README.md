@@ -7,15 +7,23 @@ More to come when the basic AKS and Cloudflare is integrated.
 I know this is still early alpha so I have NOT attached a KeyVault to contain password, keys etc. I will do that when this become more stable, but for now I need to have a slim setup, so changes can propagate quickly.
 
 # Getting Started
-## Before deploying first time
-### SSH generate key
+
+Supported providers:
+
+1. Azure
+
+# Azure installation
+The first cloud provider I want this to run on is Azure. There should be implemented other providers in the future. I have chosen Azure because it is the provider I am most experienced with.
+
+### Before deploying first time
+#### SSH generate key
 Generate the ssh key, if you don't have one yet
 
 	ssh-keygen -t rsa -b 2048 
 
 Cluster.SshRSAPublicKey should be set to the pubkey.
 
-### Service Principal
+#### Service Principal
 Remember to create a service principal
 
 	az ad sp create-for-rbac --skip-assignment
