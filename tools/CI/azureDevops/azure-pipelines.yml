@@ -23,7 +23,7 @@ stages:
     - group: Bl0g.Production
     - group: Bl0g.Infrastructure.Bootstrap.Release
   jobs:
-  - deployment: Deploy
+  - deployment: Deploy environmental resources
     pool:
         vmImage: 'windows-latest'
     environment: 'blog-deployment'
@@ -58,7 +58,7 @@ stages:
                     resourceGroupName: '$(Release.ResourceGroup.Name)'
                     location: '$(Release.Location)'
                     templateLocation: 'URL of the file'
-                    csmFileLink: '$(ArmStorageUri)maintemplate.json$(ArmStorageSasToken)'
-                    csmParametersFileLink: '$(ArmStorageUri)maintemplate.parameters.json$(ArmStorageSasToken)'
+                    csmFileLink: '$(ArmStorageUri)environmental.resources.template.json$(ArmStorageSasToken)'
+                    csmParametersFileLink: '$(ArmStorageUri)environmental.resources.template.parameters.json$(ArmStorageSasToken)'
                     overrideParameters: '-storageSasToken "$(ArmStorageSasToken)" -storageUri "$(ArmStorageUri)" -mssqlAdminLogin "$(Database.Login)" -mssqlAdminPassword "$(Database.Password)"'
                     deploymentMode: 'Incremental'
