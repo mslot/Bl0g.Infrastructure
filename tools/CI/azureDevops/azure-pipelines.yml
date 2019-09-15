@@ -26,7 +26,7 @@ stages:
     - name: "TEMPLATE_STORAGE_NAME"
       value: "$(Blog.Prefix)$(Release.Template.Storage.Name)$(Env)"
     - name: "RESOURCE_GROUP_NAME"
-      value: "$(Blog.Prefix)$(Resource.Group.Name)-rg"
+      value: "$(Blog.Prefix)$(ResourceGroup.Name)-rg"
   jobs:
   - deployment: DeployResources
     pool:
