@@ -17,6 +17,7 @@ stages:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'drop'
         publishLocation: 'Container'
+        
 - stage: DeployProduction
   variables:
     - group: Bl0g
@@ -51,6 +52,7 @@ stages:
                     ContainerName: 'arm'
                     outputStorageUri: 'ArmStorageUri'
                     outputStorageContainerSasToken: 'ArmStorageSasToken'
+                    sasTokenTimeOutInMinutes: '10'
                 - task: AzureResourceGroupDeployment@2
                   inputs:
                     azureSubscription: 'blog-connection'
@@ -62,15 +64,6 @@ stages:
                     csmParametersFileLink: '$(ArmStorageUri)environmental.resources.template.parameters.json$(ArmStorageSasToken)'
                     overrideParameters: '-storageSasToken "$(ArmStorageSasToken)" -storageUri "$(ArmStorageUri)" -mssqlAdminLogin "$(Database.Login)" -mssqlAdminPassword "$(Database.Password)"'
                     deploymentMode: 'Incremental'
-  - deployment: DeployClusterResources
-    dependsOn: DeployEnvironmentalResources
-    pool:
-        vmImage: 'windows-latest'
-    environment: 'blog-deployment-production'
-    strategy:
-        runOnce:
-            deploy:
-                steps:
                 - task: AzureResourceGroupDeployment@2
                   inputs:
                     azureSubscription: 'blog-connection'
