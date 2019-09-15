@@ -1,8 +1,19 @@
+# Still early alpha
+I know this is still early alpha so I have NOT attached a KeyVault to contain password, keys etc. I will do that when this become more stable, but for now I need to have a slim setup, so changes can propagate quickly.
+
 # Azure
 Code for setting up the infrastructure in Azure
 
 # Before deploying first time
-Remember to create a service principal:
+## SSH generate key
+Generate the ssh key, if you don't have one yet
+
+	ssh-keygen -t rsa -b 2048 
+
+Cluster.SshRSAPublicKey should be set to the pubkey.
+
+## Service Principal
+Remember to create a service principal
 
 	az ad sp create-for-rbac --skip-assignment
 
