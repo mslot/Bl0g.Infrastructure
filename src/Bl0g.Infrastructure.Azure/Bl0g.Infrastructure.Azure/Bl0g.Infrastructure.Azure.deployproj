@@ -23,6 +23,8 @@
   <Import Condition=" Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Deployment\1.1\DeploymentProject.targets') " Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Deployment\1.1\DeploymentProject.targets" />
   <!-- vertag<:>end -->
   <ItemGroup>
+    <None Include="cluster.template.json" />
+    <None Include="cluster.template.parameters.json" />
     <None Include="SubTemplates\Bootstrapping\azuretemplatestorage.parameters.json" />
     <None Include="SubTemplates\Bootstrapping\azuretemplatestorage.json" />
     <None Include="SubTemplates\ContainerOrchestration\aks.json" />
