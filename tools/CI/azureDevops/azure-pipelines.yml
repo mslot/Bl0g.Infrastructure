@@ -12,6 +12,7 @@ stages:
         SourceFolder: $(Build.ARM.Source.Path)
         Contents: '**\*.json'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
@@ -21,9 +22,10 @@ stages:
     - task: PublishPipelineArtifact@1
       inputs:
         artifactName: 'bl0g.infrastructure.kubernetes.mainfests'
-        path: '$(Build.Repository.LocalPath)/Bl0g.Infrastructure.Kubernetes'
+        path: '$(Build.Repository.LocalPath)/src/Bl0g.Infrastructure.Kubernetes'
         
-- stage: DeployProduction
+- stage: BootstrapProductionAKS
+  displayName: Bootstrap AKS 
   variables:
     - group: Bl0g
     - group: Bl0g.Infrastructure.Bootstrap.Release
@@ -84,11 +86,12 @@ stages:
                     csmParametersFileLink: '$(ArmStorageUri)cluster.template.parameters.json$(ArmStorageSasToken)'
                     overrideParameters: '-aksAgentVMSize "$(Cluster.VMSize)" -aksPrefix "$(Blog.Prefix)" -aksServicePrincipalClientSecret "$(Cluster.ServicePrincipalClientSecret)" -aksServicePrincipalClientId "$(Cluster.ServicePrincipalClientId)" -aksSshRSAPublicKey "$(Cluster.SshRSAPublicKey)" -aksLinuxAdminUsername "$(Cluster.AdminUsername)" -aksDnsPrefix "$(Cluster.DnsPrefix)" -aksClusterName "$(Cluster.Name)" -storageSasToken "$(ArmStorageSasToken)" -storageUri "$(ArmStorageUri)" -env "$(Env)"'
                     deploymentMode: 'Incremental'
-- stage: DeployKubernetes
-  displayName: Deploy stage
+
+- stage: DeployAKSArtifacts
+  displayName: Deploy AKS artifacts
   dependsOn:
   - Build
-  - DeployProduction
+  - BootstrapProductionAKS
   jobs:
   - deployment: Deploy
     displayName: Deploy job
