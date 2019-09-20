@@ -17,6 +17,11 @@ stages:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'drop'
         publishLocation: 'Container'
+
+    - task: PublishPipelineArtifact@1
+      inputs:
+        artifactName: 'bl0g.infrastructure.kubernetes.mainfests'
+        path: '$(Build.Repository.LocalPath)/Bl0g.Infrastructure.Kubernetes'
         
 - stage: DeployProduction
   variables:
@@ -79,3 +84,29 @@ stages:
                     csmParametersFileLink: '$(ArmStorageUri)cluster.template.parameters.json$(ArmStorageSasToken)'
                     overrideParameters: '-aksAgentVMSize "$(Cluster.VMSize)" -aksPrefix "$(Blog.Prefix)" -aksServicePrincipalClientSecret "$(Cluster.ServicePrincipalClientSecret)" -aksServicePrincipalClientId "$(Cluster.ServicePrincipalClientId)" -aksSshRSAPublicKey "$(Cluster.SshRSAPublicKey)" -aksLinuxAdminUsername "$(Cluster.AdminUsername)" -aksDnsPrefix "$(Cluster.DnsPrefix)" -aksClusterName "$(Cluster.Name)" -storageSasToken "$(ArmStorageSasToken)" -storageUri "$(ArmStorageUri)" -env "$(Env)"'
                     deploymentMode: 'Incremental'
+- stage: Deploy
+  displayName: Deploy stage
+  dependsOn: Build, DeployProduction
+  jobs:
+  - deployment: Deploy
+    displayName: Deploy job
+    pool:
+      vmImage: 'ubuntu-latest'
+    environment: 'blog-deployment'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifactName: 'bl0g.infrastructure.kubernetes.mainfests'
+              downloadPath: '$(System.ArtifactsDirectory)/manifests'
+              
+          - task: KubernetesManifest@0
+            displayName: Deploy to Kubernetes cluster
+            inputs:
+              action: 'deploy'
+              kubernetesServiceConnection: 'blog-aks-connection'
+              namespace: 'test'
+              manifests: |
+                $(System.ArtifactsDirectory)/manifests/namespaces.yml
