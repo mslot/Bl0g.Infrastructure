@@ -112,6 +112,5 @@ stages:
             inputs:
               action: 'deploy'
               kubernetesServiceConnection: 'blog-aks-connection'
-              namespace: 'test'
               manifests: |
                 $(System.ArtifactsDirectory)/manifests/namespaces.yml
