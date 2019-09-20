@@ -84,9 +84,11 @@ stages:
                     csmParametersFileLink: '$(ArmStorageUri)cluster.template.parameters.json$(ArmStorageSasToken)'
                     overrideParameters: '-aksAgentVMSize "$(Cluster.VMSize)" -aksPrefix "$(Blog.Prefix)" -aksServicePrincipalClientSecret "$(Cluster.ServicePrincipalClientSecret)" -aksServicePrincipalClientId "$(Cluster.ServicePrincipalClientId)" -aksSshRSAPublicKey "$(Cluster.SshRSAPublicKey)" -aksLinuxAdminUsername "$(Cluster.AdminUsername)" -aksDnsPrefix "$(Cluster.DnsPrefix)" -aksClusterName "$(Cluster.Name)" -storageSasToken "$(ArmStorageSasToken)" -storageUri "$(ArmStorageUri)" -env "$(Env)"'
                     deploymentMode: 'Incremental'
-- stage: Deploy
+- stage: DeployKubernetes
   displayName: Deploy stage
-  dependsOn: Build, DeployProduction
+  dependsOn:
+  - Build
+  - DeployProduction
   jobs:
   - deployment: Deploy
     displayName: Deploy job
