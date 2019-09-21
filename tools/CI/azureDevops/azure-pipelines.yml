@@ -117,9 +117,9 @@ stages:
 
           - task: KubernetesManifest@0
             displayName: Deploy nginx to Kubernetes cluster
-            namespace: 'nginx-ingress'
             inputs:
               action: 'deploy'
+              namespace: 'nginx-ingress'
               kubernetesServiceConnection: 'blog-aks-connection'
               manifests: |
                 $(System.ArtifactsDirectory)/manifests/nginx/common/ns-and-sa.yaml
