@@ -51,8 +51,15 @@ TODO: describe
 2.	Latest releases
 3.	API references
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+# Build, Deploy and Test
+To build this in Azure DevOps the following service connections needs to be set up:
+1. blog-connection  - for the Azure subscription that hosts the AKS cluster
+2. blog-aks-connection - for the kubernetes cluster
+3. docker-registry-prd-connection - for the docker registry
+
+Firstly set up the blog-connection and run the Bl0g.Infrastructure/tools/CI/azureDevops/azure-pipelines.yml. It will fail when you get to DeployAKSArtifacts. After it fails, set up the blog-aks-connection and docker-registry-prd-connection. Those resources have been set up in the first stage of the pipelines build.
+
+In the future I will split these stages up in two, so the "build and release it two times" isn't needed.
 
 # Contribute
 TODO: Explain how other users and developers can contribute to make your code better. 
