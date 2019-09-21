@@ -114,10 +114,10 @@ stages:
               kubernetesServiceConnection: 'blog-aks-connection'
               manifests: |
                 $(System.ArtifactsDirectory)/manifests/namespaces.yml
-                https://github.com/nginxinc/kubernetes-ingress/blob/master/deployments/common/ns-and-sa.yaml
-                https://github.com/nginxinc/kubernetes-ingress/blob/master/deployments/common/default-server-secret.yaml
-                https://github.com/nginxinc/kubernetes-ingress/blob/master/deployments/common/nginx-config.yaml
-                https://github.com/nginxinc/kubernetes-ingress/blob/master/deployments/common/custom-resource-definitions.yaml
-                https://github.com/nginxinc/kubernetes-ingress/blob/master/deployments/daemon-set/nginx-ingress.yaml
+                $(System.ArtifactsDirectory)/manifests/nginx/common/ns-and-sa.yaml
+                $(System.ArtifactsDirectory)/manifests/nginx/common/default-server-secret.yaml
+                $(System.ArtifactsDirectory)/manifests/nginx/common/nginx-config.yaml
+                $(System.ArtifactsDirectory)/manifests/nginx/common/custom-resource-definitions.yaml
+                $(System.ArtifactsDirectory)/manifests/nginx/daemon-set/nginx-ingress.yaml
 
           
