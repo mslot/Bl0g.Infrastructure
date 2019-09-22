@@ -127,5 +127,6 @@ stages:
                 $(System.ArtifactsDirectory)/manifests/nginx/common/nginx-config.yaml
                 $(System.ArtifactsDirectory)/manifests/nginx/common/custom-resource-definitions.yaml
                 $(System.ArtifactsDirectory)/manifests/nginx/daemon-set/nginx-ingress.yaml
+                $(System.ArtifactsDirectory)/manifests/nginx/service/loadbalancer.yaml
 
           
