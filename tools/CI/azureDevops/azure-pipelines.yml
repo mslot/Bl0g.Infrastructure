@@ -29,7 +29,7 @@ stages:
   variables:
     - group: Bl0g
     - group: Bl0g.Infrastructure.Bootstrap.Release
-    - group: Bl0g.Production
+    - group: Bl0g.Infrastructure.Production
     - name: "TEMPLATE_STORAGE_NAME"
       value: "$(Blog.Prefix)$(Release.Template.Storage.Name)$(Env)"
     - name: "RESOURCE_GROUP_NAME"
