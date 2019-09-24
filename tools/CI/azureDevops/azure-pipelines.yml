@@ -106,14 +106,6 @@ stages:
             inputs:
               artifactName: 'bl0g.infrastructure.kubernetes.mainfests'
               downloadPath: '$(System.ArtifactsDirectory)/manifests'
-              
-          - task: KubernetesManifest@0
-            displayName: Deploy to Kubernetes cluster
-            inputs:
-              action: 'deploy'
-              kubernetesServiceConnection: 'blog-aks-connection'
-              manifests: |
-                $(System.ArtifactsDirectory)/manifests/namespaces.yml
 
           - task: KubernetesManifest@0
             displayName: Deploy nginx to Kubernetes cluster
