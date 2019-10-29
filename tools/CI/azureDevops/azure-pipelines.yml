@@ -26,6 +26,8 @@ stages:
 
 - stage: DeployLocalTestRessources
   displayName : Local ressources used for test
+  dependsOn:
+  - Build
   variables:
     - group: Bl0g
     - group: Bl0g.Infrastructure.Bootstrap.Release
