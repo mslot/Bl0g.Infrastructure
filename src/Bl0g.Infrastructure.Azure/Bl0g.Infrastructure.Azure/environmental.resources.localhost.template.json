@@ -10,20 +10,19 @@
     }
   },
   "variables": {
-    "location": "[resourceGroup().location]"
   },
   "resources": [
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2018-05-01",
-      "name": "containerRegistryDeploy",
+      "name": "localStorageDeploy",
       "properties": {
         "mode": "Incremental",
         "templateLink": {
           "uri": "[uri(deployment().properties.templateLink.uri,concat('SubTemplates/Storage/azurestorage.json',parameters('storageSasToken')))]"
         },
         "parameters": {
-          "location": { "value": "[variables('location')]" }
+          "storagename": { "value": "[parameters('storagename')]" }
         }
       }
     }
