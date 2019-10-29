@@ -31,7 +31,6 @@
       },
       "dependsOn": [],
       "tags": {
-        "displayName": "azuretemplate"
       },
       "kind": "Storage"
     }
