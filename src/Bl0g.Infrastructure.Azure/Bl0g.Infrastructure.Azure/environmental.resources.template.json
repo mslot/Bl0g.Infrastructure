@@ -31,9 +31,6 @@
     "storageSasToken": {
       "type": "string"
     },
-    "storageUri": {
-      "type": "string"
-    },
     "dockerRegistryName": {
       "type": "string"
     },
@@ -47,7 +44,6 @@
   "variables": {
     "location": "[resourceGroup().location]",
     "azuretemplatestoragename": "[concat('azuretemplatestorage',parameters('env'))]",
-    "azuretemplatestorageurl": "[parameters('storageUri')]",
     "mssqlServerName": "[concat(parameters('prefix'),'-',parameters('mssqlServerName'),'-',parameters('env'))]",
     "dockerRegistryName": "[concat(parameters('prefix'),parameters('dockerRegistryName'),parameters('env'))]",
     "mssqlDatabaseName": "[concat(parameters('prefix'),'-',parameters('mssqlDatabaseName'),'-',parameters('env'))]"

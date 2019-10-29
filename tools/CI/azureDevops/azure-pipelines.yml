@@ -80,7 +80,7 @@ stages:
                     templateLocation: 'URL of the file'
                     csmFileLink: '$(ArmStorageUri)environmental.resources.localhost.template.json$(ArmStorageSasToken)'
                     csmParametersFileLink: '$(ArmStorageUri)environmental.resources.localhost.template.parameters.json$(ArmStorageSasToken)'
-                    overrideParameters: '-storagename $(STORAGE_NAME) -env $(Env)'
+                    overrideParameters: '-storagename $(STORAGE_NAME) -env $(Env) -storageSasToken "$(ArmStorageSasToken)"'
                     deploymentMode: 'Incremental'
 
 - stage: BootstrapProductionAKS
@@ -132,7 +132,7 @@ stages:
                     templateLocation: 'URL of the file'
                     csmFileLink: '$(ArmStorageUri)environmental.resources.template.json$(ArmStorageSasToken)'
                     csmParametersFileLink: '$(ArmStorageUri)environmental.resources.template.parameters.json$(ArmStorageSasToken)'
-                    overrideParameters: '-dockerRegistrySku "$(Docker.Registry.Sku)" -dockerRegistryAdminUserEnabled "$(Docker.Registry.AdminUserEnabled)" -dockerRegistryName "$(Docker.Registry.Name)" -prefix "$(Blog.Prefix)" -env "$(Env)" -storageSasToken "$(ArmStorageSasToken)" -storageUri "$(ArmStorageUri)" -mssqlAdminLogin "$(Database.Login)" -mssqlAdminPassword "$(Database.Password)"'
+                    overrideParameters: '-dockerRegistrySku "$(Docker.Registry.Sku)" -dockerRegistryAdminUserEnabled "$(Docker.Registry.AdminUserEnabled)" -dockerRegistryName "$(Docker.Registry.Name)" -prefix "$(Blog.Prefix)" -env "$(Env)" -storageSasToken "$(ArmStorageSasToken)" -mssqlAdminLogin "$(Database.Login)" -mssqlAdminPassword "$(Database.Password)"'
                     deploymentMode: 'Incremental'
                 - task: AzureResourceGroupDeployment@2
                   inputs:
