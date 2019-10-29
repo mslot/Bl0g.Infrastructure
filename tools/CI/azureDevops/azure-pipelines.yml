@@ -80,7 +80,7 @@ stages:
                     templateLocation: 'URL of the file'
                     csmFileLink: '$(ArmStorageUri)environmental.resources.localhost.template.json$(ArmStorageSasToken)'
                     csmParametersFileLink: '$(ArmStorageUri)environmental.resources.localhost.template.parameters.json$(ArmStorageSasToken)'
-                    overrideParameters: '-storagename $(STORAGE_NAME)'
+                    overrideParameters: '-storagename $(STORAGE_NAME) -env $(Env)'
                     deploymentMode: 'Incremental'
 
 - stage: BootstrapProductionAKS
