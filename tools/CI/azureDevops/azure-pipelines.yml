@@ -57,7 +57,7 @@ stages:
                     templateLocation: 'Linked artifact'
                     csmFile: '$(Release.Template.Path)'
                     csmParametersFile: '$(Release.Template.Parameters.Path)'
-                    overrideParameters: '-storagename "$(TEMPLATE_STORAGE_NAME)"'
+                    overrideParameters: '-storagename "$(TEMPLATE_STORAGE_NAME)" -location "$(Release.Template.Storage.Location)"'
                     deploymentMode: 'Incremental'
                 - task: AzureFileCopy@3
                   displayName: Copy templates to template storage
@@ -111,7 +111,7 @@ stages:
                     templateLocation: 'Linked artifact'
                     csmFile: '$(Release.Template.Path)'
                     csmParametersFile: '$(Release.Template.Parameters.Path)'
-                    overrideParameters: '-storagename "$(TEMPLATE_STORAGE_NAME)"'
+                    overrideParameters: '-storagename "$(TEMPLATE_STORAGE_NAME)" -location "$(Release.Template.Storage.Location)"'
                     deploymentMode: 'Incremental'
                 - task: AzureFileCopy@3
                   inputs:
