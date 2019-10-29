@@ -13,6 +13,7 @@
     }
   },
   "variables": {
+    "location": "[resourceGroup().location]"
   },
   "resources": [
     {
@@ -25,6 +26,7 @@
           "uri": "[uri(deployment().properties.templateLink.uri,concat('SubTemplates/Storage/azurestorage.json',parameters('storageSasToken')))]"
         },
         "parameters": {
+          "location": { "value": "[variables('location')]" },
           "storagename": { "value": "[parameters('storagename')]" }
         }
       }

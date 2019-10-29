@@ -2,6 +2,9 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "location": {
+      "type":"string"
+    },
     "storagename": {
       "type": "string"
     },
@@ -24,7 +27,7 @@
     {
       "name": "[parameters('storageName')]",
       "type": "Microsoft.Storage/storageAccounts",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "apiVersion": "2016-01-01",
       "sku": {
         "name": "[parameters('azuretemplateType')]"
