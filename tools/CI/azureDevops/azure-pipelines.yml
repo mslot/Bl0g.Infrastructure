@@ -48,6 +48,7 @@ stages:
             deploy:
                 steps:
                 - task: AzureResourceGroupDeployment@2
+                  displayName: Create template storage
                   inputs:
                     azureSubscription: 'blog-connection'
                     action: 'Create Or Update Resource Group'
@@ -59,6 +60,7 @@ stages:
                     overrideParameters: '-storagename "$(TEMPLATE_STORAGE_NAME)"'
                     deploymentMode: 'Incremental'
                 - task: AzureFileCopy@3
+                  displayName: Copy templates to template storage
                   inputs:
                     SourcePath: '$(Release.Template.Arm.Source.Path)'
                     azureSubscription: 'blog-connection'
@@ -69,6 +71,7 @@ stages:
                     outputStorageContainerSasToken: 'ArmStorageSasToken'
                     sasTokenTimeOutInMinutes: '10'
                 - task: AzureResourceGroupDeployment@2
+                  displayName: create localhost storage account
                   inputs:
                     azureSubscription: 'blog-connection'
                     action: 'Create Or Update Resource Group'
