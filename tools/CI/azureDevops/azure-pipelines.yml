@@ -23,7 +23,61 @@ stages:
       inputs:
         artifactName: 'bl0g.infrastructure.kubernetes.mainfests'
         path: '$(Build.Repository.LocalPath)/src/Bl0g.Infrastructure.Kubernetes'
-        
+
+- stage: DeployLocalTestRessources
+  displayName : Local ressources used for test
+  variables:
+    - group: Bl0g
+    - group: Bl0g.Infrastructure.Bootstrap.Release
+    - group: Bl0g.Infrastructure.Localhost
+    - name: "TEMPLATE_STORAGE_NAME"
+      value: "$(Blog.Prefix)$(Release.Template.Storage.Name)$(Env)"
+    - name: "RESOURCE_GROUP_NAME"
+      value: "$(Blog.Prefix)-$(ResourceGroup.Name)-$(Env)-rg"
+    - name: "STORAGE_NAME"
+      value: "$(Storage.Name)$(Env)"
+  jobs:
+  - deployment: DeployResources
+    pool:
+        vmImage: 'windows-latest'
+    environment: 'blog-deployment-localhost'
+    strategy:
+        runOnce:
+            deploy:
+                steps:
+                - task: AzureResourceGroupDeployment@2
+                  inputs:
+                    azureSubscription: 'blog-connection'
+                    action: 'Create Or Update Resource Group'
+                    resourceGroupName: $(RESOURCE_GROUP_NAME)
+                    location: $(Release.Location)
+                    templateLocation: 'Linked artifact'
+                    csmFile: '$(Release.Template.Path)'
+                    csmParametersFile: '$(Release.Template.Parameters.Path)'
+                    overrideParameters: '-storagename "$(TEMPLATE_STORAGE_NAME)"'
+                    deploymentMode: 'Incremental'
+                - task: AzureFileCopy@3
+                  inputs:
+                    SourcePath: '$(Release.Template.Arm.Source.Path)'
+                    azureSubscription: 'blog-connection'
+                    Destination: 'AzureBlob'
+                    storage: '$(TEMPLATE_STORAGE_NAME)'
+                    ContainerName: 'arm'
+                    outputStorageUri: 'ArmStorageUri'
+                    outputStorageContainerSasToken: 'ArmStorageSasToken'
+                    sasTokenTimeOutInMinutes: '10'
+                - task: AzureResourceGroupDeployment@2
+                  inputs:
+                    azureSubscription: 'blog-connection'
+                    action: 'Create Or Update Resource Group'
+                    resourceGroupName: '$(RESOURCE_GROUP_NAME)'
+                    location: '$(Release.Location)'
+                    templateLocation: 'URL of the file'
+                    csmFileLink: '$(ArmStorageUri)environmental.resources.localhost.template.json$(ArmStorageSasToken)'
+                    csmParametersFileLink: '$(ArmStorageUri)environmental.resources.localhost.template.parameters.json$(ArmStorageSasToken)'
+                    overrideParameters: '-storagename $(STORAGE_NAME)'
+                    deploymentMode: 'Incremental'
+
 - stage: BootstrapProductionAKS
   displayName: Bootstrap AKS 
   variables:

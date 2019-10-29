@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "env":{
+      "type":"string"
+    },
+    "storagename":{
+      "type":"string"
+    }
+  },
+  "variables": {
+    "location": "[resourceGroup().location]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "name": "containerRegistryDeploy",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[uri(deployment().properties.templateLink.uri,concat('SubTemplates/Storage/azurestorage.json',parameters('storageSasToken')))]"
+        },
+        "parameters": {
+          "location": { "value": "[variables('location')]" }
+        }
+      }
+    }
+  ],
+  "outputs": {
+  }
+}
