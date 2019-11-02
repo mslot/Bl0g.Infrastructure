@@ -62,9 +62,4 @@ Firstly set up the blog-connection and run the Bl0g.Infrastructure/tools/CI/azur
 In the future I will split these stages up in two, so the "build and release it two times" isn't needed.
 
 # Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
-
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+TODO: Explain how other users and developers can contribute to make code better. We need better code!
