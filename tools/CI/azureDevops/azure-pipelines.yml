@@ -7,6 +7,8 @@ trigger:
     - src/*
     exclude:
     - README.md
+    - tools/*
+    - local/*
 stages:    
 - stage: Build
   variables:
