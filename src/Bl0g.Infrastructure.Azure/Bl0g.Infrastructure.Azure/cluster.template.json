@@ -1,5 +1,4 @@
 {
-  
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
@@ -45,7 +44,7 @@
     },
     "aksAgentVMSize": {
       "type": "string",
-      "defaultValue": "DS1_v2",
+      "defaultValue": "Standard_B2s",
       "metadata": {
         "description": "The size of the Virtual Machine."
       }
