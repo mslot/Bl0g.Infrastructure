@@ -53,15 +53,22 @@ TODO: describe
 
 # Build, Deploy and Test
 
-## Azure DevOps
-To build this in Azure DevOps the following service connections needs to be set up:
-1. blog-connection  - for the Azure subscription that hosts the AKS cluster
-2. blog-aks-connection - for the kubernetes cluster
-3. docker-registry-prd-connection - for the docker registry
+## Azure DevOps build
+This is build through the tools/azureDevops/azure-pipelines.yml.
 
-Firstly set up the blog-connection and run the Bl0g.Infrastructure/tools/CI/azureDevops/azure-pipelines.yml. It will fail when you get to DeployAKSArtifacts. After it fails, set up the blog-aks-connection and docker-registry-prd-connection. Those resources have been set up in the first stage of the pipelines build.
+Two artifacts is produced:
 
-In the future I will split these stages up in two, so the "build and release it two times" isn't needed.
+1. bl0g.infrastructure.arm
+2. bl0g.infrastructure.kubernetes.mainfests
+
+One variable has to be set:
+
+1. Build.ARM.Source.Path - where do the ARM templates reside? - could be set to: src/Bl0g.Infrastructure.Azure/Bl0g.Infrastructure.Azure
+
+## Release
+There is no release script, and I am not going to write one. These things can be released in 1000 of ways. I want this to be as open as possible.
+
+Disclaimer: I tried to do this, but the yaml release is not feature rich enough to do so. The things i did became to cumbersome. I therefore rely on the release designer in Azure DevOps. 
 
 # Contribute
 TODO: Explain how other users and developers can contribute to make code better. We need better code!
