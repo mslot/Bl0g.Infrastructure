@@ -1,4 +1,13 @@
-stages:
+trigger:
+  pr:
+    - master
+    - releases/*
+  paths:
+    include:
+    - src/*
+    exclude:
+    - README.md
+stages:    
 - stage: Build
   variables:
   - group: Bl0g.Infrastructure.Build
