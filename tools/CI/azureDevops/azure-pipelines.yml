@@ -1,13 +1,15 @@
 pr:
-- master
-- releases/*
- paths:
-   include:
-   - src/*
-   exclude:
-   - README.md
-   - tools/*
-   - local/*
+  branches:
+    include:
+    - master
+    - releases/*
+  paths:
+    include:
+    - src/*
+    exclude:
+    - README.md
+    - tools/*
+    - local/*
 stages:    
 - stage: Build
   variables:
