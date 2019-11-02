@@ -1,14 +1,13 @@
-trigger:
-  pr:
-    - master
-    - releases/*
-  paths:
-    include:
-    - src/*
-    exclude:
-    - README.md
-    - tools/*
-    - local/*
+pr:
+- master
+- releases/*
+ paths:
+   include:
+   - src/*
+   exclude:
+   - README.md
+   - tools/*
+   - local/*
 stages:    
 - stage: Build
   variables:
