@@ -52,6 +52,8 @@ TODO: describe
 3.	API references
 
 # Build, Deploy and Test
+
+## Azure DevOps
 To build this in Azure DevOps the following service connections needs to be set up:
 1. blog-connection  - for the Azure subscription that hosts the AKS cluster
 2. blog-aks-connection - for the kubernetes cluster
