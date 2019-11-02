@@ -16,11 +16,10 @@ Supported providers:
 The first cloud provider I want this to run on is Azure. There should be implemented other providers in the future. I have chosen Azure because it is the provider I am most experienced with.
 
 ### Before deploying first time
-Three things needs to be set up:
+Two things needs to be set up:
 
 1. SSH key
 2. Service Principal in Azure
-3. A connection to your Azure tenant where the bl0g is going to be running, named "blog-connection"
 
 #### SSH generate key
 Generate the ssh key, if you don't have one yet
