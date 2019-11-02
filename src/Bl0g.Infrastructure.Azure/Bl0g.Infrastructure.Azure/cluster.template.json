@@ -94,7 +94,7 @@
         "1.14.6"
       ],
       "metadata": {
-        "description": "The version of Kubernetes."
+        "description": "The version of AKS cluster."
       }
     },
     "env": {
