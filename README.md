@@ -65,6 +65,8 @@ One variable has to be set:
 
 1. Build.ARM.Source.Path - where do the ARM templates reside? - could be set to: src/Bl0g.Infrastructure.Azure/Bl0g.Infrastructure.Azure
 
+This variable has to be defined in a library called Bl0g.Infrastructure.Build.
+
 ## Release
 There is no release script, and I am not going to write one. These things can be released in 1000 of ways. I want this to be as open as possible.
 
