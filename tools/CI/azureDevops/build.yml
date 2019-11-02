@@ -1,0 +1,38 @@
+pr: none
+trigger:
+  branches:
+    include:
+    - master
+    - releases/*
+  paths:
+    include:
+    - src/*
+    exclude:
+    - README.md
+    - tools/*
+    - local/*
+stages:    
+- stage: Build
+  variables:
+  - group: Bl0g.Infrastructure.Build
+  jobs:
+  - job: BuildJob
+    pool:
+        vmImage: 'windows-latest'
+    steps:
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: $(Build.ARM.Source.Path)
+        Contents: '**\*.json'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'bl0g.infrastructure.arm'
+        publishLocation: 'Container'
+
+    - task: PublishPipelineArtifact@1
+      inputs:
+        artifactName: 'bl0g.infrastructure.kubernetes.mainfests'
+        path: '$(Build.Repository.LocalPath)/src/Bl0g.Infrastructure.Kubernetes'

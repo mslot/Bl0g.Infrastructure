@@ -1,0 +1,27 @@
+trigger: none
+pr:
+  branches:
+    include:
+    - master
+    - releases/*
+  paths:
+    include:
+    - src/*
+    exclude:
+    - README.md
+    - tools/*
+    - local/*
+stages:    
+- stage: Build
+  variables:
+  - group: Bl0g.Infrastructure.Build
+  jobs:
+  - job: BuildJob
+    pool:
+        vmImage: 'windows-latest'
+    steps:
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: $(Build.ARM.Source.Path)
+        Contents: '**\*.json'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
