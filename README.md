@@ -52,6 +52,41 @@ TODO: describe
 
 # Build, Deploy and Test
 
+## Run local
+To run the platform local, you need to clone all projects down, to a single folder. Name all projects after the repo.
+
+Remember to run docker-compose build first!!
+
+### Bl0g.Migrations
+If you want to run the migrations project for it self add a appsettings.local.json to Bl0g.Migrations.Console. An example could be:
+
+	{
+	  "CONNECTION_STRING": "Server=[database ip or docker name];User Id=sa;Password=[password];Connection Timeout=60",
+	  "DATABASE_NAME": "Bl0g"
+	}
+
+Set the username and password to what you apploed when running the SetUpDockerInfrastructure.ps1.
+
+If you want to run it in a docker instance, remember to set 
+
+	<PropertyGroup>
+   		<DockerfileRunArguments>--network bl0g_network</DockerfileRunArguments>
+	</PropertyGroup>
+
+in the Bl0g.Migrations.Console csproj file. 
+
+If you want to run it as a normal console application, apply the docker host ip.
+
+### docker-compose
+Cd into Bl0g.Infrastructure\tools\local and run SetUpDockerInfrastructure.ps1. Apply same username, database name and password that you applied to the migration connectionstring.
+
+Please be aware that the User Id should always be sa because of how MSSQL is setup in docker. Remember username and password.
+
+### browse your site
+Go to https://localhost:6000 and see the site.
+
+REMEMBER, if you run "docker system prune", it will delete your database, so use this only for test.
+
 ## Azure DevOps build
 This is build through the tools/azureDevops/azure-pipelines.yml.
 
