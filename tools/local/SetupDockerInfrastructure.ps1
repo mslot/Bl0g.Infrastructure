@@ -23,13 +23,7 @@ param (
 #   <DockerfileRunArguments>--network bl0g_network</DockerfileRunArguments>
 #</PropertyGroup>
 #
-# in their csproj. Also remember to start Azurite:
-#
-#    docker run -p 10000:10000 -p 10001:10001 --network bl0g_network --name azure_storage mcr.microsoft.com/azure-storage/azurite azurite --blobHost 0.0.0.0 --queueHost 0.0.0.0 
-# 
-# and remember to point it to the network (as it is done above)
-
-# docker network create bl0g_network
+# in their csproj. 
 
 # Default storage system used by azure functions.
 # To read more about it, visit: https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azurite

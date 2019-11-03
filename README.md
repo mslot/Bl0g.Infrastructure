@@ -73,7 +73,7 @@ If you want to run it in a docker instance, remember to set
    		<DockerfileRunArguments>--network bl0g_network</DockerfileRunArguments>
 	</PropertyGroup>
 
-in the Bl0g.Migrations.Console csproj file. 
+in the Bl0g.Migrations.Console csproj file. This network is created by the docker-compose file.
 
 If you want to run it as a normal console application, apply the docker host ip.
 

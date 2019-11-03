@@ -12,6 +12,8 @@ services:
   #   depends_on: 
   #     - database
   #     - content-api
+  #   networks: 
+  #     - bl0g_network
 
   # content-api:
   #   build:
@@ -20,6 +22,9 @@ services:
   #   - "8000:80"
   #   depends_on: 
   #     - database
+  #   networks: 
+  #     - bl0g_network
+
 
   migrations:
     build:
@@ -30,6 +35,8 @@ services:
     environment:
       CONNECTION_STRING: "Server=database;User Id=${DATABASE_USER};Password=${DATABASE_PASSWORD};Connection Timeout=30"
       DATABASE_NAME: "${DATABASE_NAME}"
+    networks: 
+      - bl0g_network
 
   database:
     image: "mcr.microsoft.com/mssql/server"
@@ -38,3 +45,9 @@ services:
     environment:
       SA_PASSWORD: "${DATABASE_PASSWORD}"
       ACCEPT_EULA: "Y"
+    networks: 
+      - bl0g_network
+
+networks:
+  bl0g_network:
+    driver: bridge 
