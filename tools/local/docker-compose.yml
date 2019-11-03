@@ -6,9 +6,6 @@ services:
   #   ports:
   #   - "6000:443"
   #   - "7000:80"
-  #   environment: 
-  #     CONTENT_API_SERVICE_HOST: ""
-  #     CONTENT_API_SERVICE_PORT: ""
   #   depends_on: 
   #     - database
   #     - content-api
@@ -24,7 +21,6 @@ services:
   #     - database
   #   networks: 
   #     - bl0g_network
-
 
   migrations:
     build:
