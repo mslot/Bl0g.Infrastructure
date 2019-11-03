@@ -1,16 +1,40 @@
 version: '3'
 services:
-  spa:
+  # spa:
+  #   build:
+  #     context: ../../../Bl0g.SPA.WebApp/src/Bl0g.SPA.WebApp/Bl0g.SPA.WebApp/
+  #   ports:
+  #   - "6000:443"
+  #   - "7000:80"
+  #   environment: 
+  #     CONTENT_API_SERVICE_HOST: ""
+  #     CONTENT_API_SERVICE_PORT: ""
+  #   depends_on: 
+  #     - database
+  #     - content-api
+
+  # content-api:
+  #   build:
+  #     context: ../../../Bl0g.Content.WebApi/src/Bl0g.Content.WebApi/
+  #   ports:
+  #   - "8000:80"
+  #   depends_on: 
+  #     - database
+
+  migrations:
     build:
-      context: ../../../Bl0g.SPA.WebApp/src/Bl0g.SPA.WebApp/Bl0g.SPA.WebApp/
+      context: ../../../Bl0g.Migrations/src/
+      dockerfile: Bl0g.Migrations.Console/Dockerfile
+    depends_on: 
+      - database
+    environment:
+      CONNECTION_STRING: "Server=database;User Id=${DATABASE_USER};Password=${DATABASE_PASSWORD};Connection Timeout=30"
+      DATABASE_NAME: "${DATABASE_NAME}"
+
+  database:
+    image: "mcr.microsoft.com/mssql/server"
     ports:
-    - "6000:443"
-    - "7000:80"
-    environment: 
-      CONTENT_API_SERVICE_HOST=""
-      CONTENT_API_SERVICE_PORT=""
-  content-api:
-    build:
-      context: ../../../Bl0g.Content.WebApi/src/Bl0g.Content.WebApi/
-    ports:
-    - "8000:80"
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "${DATABASE_PASSWORD}"
+      ACCEPT_EULA: "Y"
