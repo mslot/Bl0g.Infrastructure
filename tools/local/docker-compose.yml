@@ -1,4 +1,4 @@
-version: '3'
+version: '3.5'
 services:
   # spa:
   #   build:
@@ -47,4 +47,5 @@ services:
 
 networks:
   bl0g_network:
-    driver: bridge 
+    driver: bridge
+    name: bl0g_network
