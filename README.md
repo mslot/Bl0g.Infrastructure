@@ -61,7 +61,8 @@ Remember to run docker-compose build first!!
 If you want to run the migrations project for it self add a appsettings.local.json to Bl0g.Migrations.Console. An example could be:
 
 	{
-	  "CONNECTION_STRING": "Server=[database ip or docker name];User Id=sa;Password=[password];Connection Timeout=60",
+	  "CONNECTION_STRING": "Server=[database ip or docker name];User Id=sa;Password=[password];Connection Timeout=60;Database=Bl0g",
+	  "CREATE_DATABASE_CONNECTION_STRING": "Server=[database ip or docker name];User Id=sa;Password=[password];Connection Timeout=60",
 	  "DATABASE_NAME": "Bl0g"
 	}
 
