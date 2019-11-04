@@ -89,7 +89,7 @@ Both SQL connection strings has a timeout for 30 seconds.
 
 It also passes on the database name, so it can create it. 
 
-For now, the migrations project only supports MSSQL Server. Moreover it assumes that the database of SQL compliant server can be created with:
+For now, the migrations project only supports MSSQL Server. Moreover it assumes that the database of the SQL compliant server can be created with:
 
 	CREATE Database '[name]'
 
