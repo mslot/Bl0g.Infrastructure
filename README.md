@@ -65,7 +65,7 @@ If you want to run the migrations project for it self add a appsettings.local.js
 	  "DATABASE_NAME": "Bl0g"
 	}
 
-Set the username and password to what you apploed when running the SetUpDockerInfrastructure.ps1.
+Set the username and password to what you applied when running the SetUpDockerInfrastructure.ps1.
 
 If you want to run it in a docker instance, remember to set 
 
@@ -78,7 +78,22 @@ in the Bl0g.Migrations.Console csproj file. This network is created by the docke
 If you want to run it as a normal console application, apply the docker host ip.
 
 ### docker-compose
-Cd into Bl0g.Infrastructure\tools\local and run SetUpDockerInfrastructure.ps1. Apply same username, database name and password that you applied to the migration connectionstring.
+Cd into Bl0g.Infrastructure\tools\local and run SetUpDockerInfrastructure.ps1. Apply same username, database name and password. This script will create two connectionstring that is passed to docker-compose to do migrations and setup of the database:
+
+1. CREATE_DATABASE_CONNECTION_STRING
+2. CONNECTION_STRING
+
+1) is without the database name. 2) is with database name.
+
+It also passes on the database name, so it can create it. For now, the migrations project make the assumption that the database can be created with this SQL command:
+
+	CREATE DATABASE {databaseName}
+
+So it assumes 1) that you use a SQL compliant database 2) that the SQL CREATE command is valid for your SQL server to create a database.
+
+Both SQL connection strings has a timeout for 30 seconds.
+
+REMEMBER that the setup script is only a help. You can do your own if needed.
 
 Please be aware that the User Id should always be sa because of how MSSQL is setup in docker. Remember username and password.
 

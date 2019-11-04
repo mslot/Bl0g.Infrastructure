@@ -36,7 +36,10 @@ param (
 # Now we want to run start all docker containers locally.
 # First we run the docker-compose up.
 
- $env:DATABASE_PASSWORD=$database_password_decrypted;$env:DATABASE_USER=$database_username;$env:DATABASE_NAME=$database_name;docker-compose up
+$create_database_connection_string  = "Server=database;User Id=$database_username;Password=$database_password_decrypted;Connection Timeout=30"
+$connection_string                  = "Server=database;User Id=$database_username;Password=$database_password_decrypted;Connection Timeout=30;Database=$database_name"
+
+$env:CREATE_DATABASE_CONNECTION_STRING=$create_database_connection_string;$env:DATABASE_NAME=$database_name;$env:DATABASE_PASSWORD=$database_password_decrypted;$env:DATABASE_CONNECTION_STRING=$connection_string;docker-compose up
 
 # Be aware of the fact that MSSQL takes a bit to start, so for the connectionstring for the migrations, configure it with a long timeout (30 sec default).
 # Be aware that the connection string for migrations is a connectionstring without the database name in it. This is appended to the connectionstring after the creation of the database.
