@@ -93,6 +93,16 @@ For now, the migrations project only supports MSSQL Server. Moreover it assumes 
 
 	CREATE Database '[name]'
 
+#### Add another database
+It should be pretty easy to expand this because the underlying migrations engine is Fluent Migrator, so it supports a lot of different databases. A simple method for expanding this, is to add an environment variable to the Migrations solution of type string that describes what database to migrate to, and the make an if to add the correct type:
+
+	if(database == "SQLServer")
+		serviceCollection.AddSqlServer()
+	else if(database == "Hana")
+		serviceCollection.AddHana()
+
+etc.
+
 *REMEMBER* that the setup script is only a help. You can do your own if needed.
 
 Please be aware that the User Id should always be sa because of how MSSQL is setup in docker. Remember username and password.
