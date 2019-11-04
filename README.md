@@ -85,15 +85,15 @@ Cd into Bl0g.Infrastructure\tools\local and run SetUpDockerInfrastructure.ps1. A
 
 1) is without the database name. 2) is with database name.
 
-It also passes on the database name, so it can create it. For now, the migrations project make the assumption that the database can be created with this SQL command:
-
-	CREATE DATABASE {databaseName}
-
-So it assumes 1) that you use a SQL compliant database 2) that the SQL CREATE command is valid for your SQL server to create a database.
-
 Both SQL connection strings has a timeout for 30 seconds.
 
-REMEMBER that the setup script is only a help. You can do your own if needed.
+It also passes on the database name, so it can create it. 
+
+For now, the migrations project only supports MSSQL Server. Moreover it assumes that the database of SQL compliant server can be created with:
+
+	CREATE Database '[name]'
+
+*REMEMBER* that the setup script is only a help. You can do your own if needed.
 
 Please be aware that the User Id should always be sa because of how MSSQL is setup in docker. Remember username and password.
 
