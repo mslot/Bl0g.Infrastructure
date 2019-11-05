@@ -68,13 +68,13 @@ If you want to run the migrations project for it self add a appsettings.local.js
 
 Set the username and password to what you applied when running the SetUpDockerInfrastructure.ps1.
 
-If you want to run it in a docker instance, remember to set 
+If you want to run it in a docker instance, remember to set this in the csproj file:
 
 	<PropertyGroup>
    		<DockerfileRunArguments>--network bl0g_network</DockerfileRunArguments>
 	</PropertyGroup>
 
-in the Bl0g.Migrations.Console csproj file. This network is created by the docker-compose file.
+This has been set in the in the Bl0g.Migrations.Console csproj file. If you want another network, then remember to change it before running it from Visual Studio. This network is created by the docker-compose file.
 
 If you want to run it as a normal console application, apply the docker host ip.
 
@@ -95,18 +95,9 @@ For now, the migrations project only supports MSSQL Server. Moreover it assumes 
 	CREATE Database '[name]'
 
 #### Add another database
-It should be pretty easy to expand this because the underlying migrations engine is Fluent Migrator, so it supports a lot of different databases. A simple method for expanding this, is to add an environment variable to the Migrations solution of type string that describes what database to migrate to, and the make an if to add the correct type:
+The DATABASE_IDENTIFIER environment variable in the migrations service should match the identifier column in the list provided by FluentMigrator: https://fluentmigrator.github.io/articles/multi-db-support.html (look under Supported databases). For now I have only added support for SqlServer2016, but it should be pretty esasy to extend this if other types of databases is needed.
 
-	if(database == "SQLServer")
-		serviceCollection.AddSqlServer()
-	else if(database == "Hana")
-		serviceCollection.AddHana()
-
-etc.
-
-*REMEMBER* that the setup script is only a help. You can do your own if needed.
-
-Please be aware that the User Id should always be sa because of how MSSQL is setup in docker. Remember username and password.
+The only caveat is that the migrations project uses SQL to create the database if not present. This part should be updated if the database that is switched doesn't support the flavor of the create statement. I am certain that the database check is pretty SqlServer specific and needs to be changed if database is changed. This should be pretty straight forward to do, I think. The relevant code is in the Bl0g.Migrations.Console project. I have also added an exception that throws if the identifier doesnt container "SqlServer" for the database creation part.
 
 ### browse your site
 Go to https://localhost:6000 and see the site.
