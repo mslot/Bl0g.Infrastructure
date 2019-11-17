@@ -85,7 +85,7 @@ If you want to run it as a normal console application, apply the docker host ip.
 ### docker-compose
 Cd into Bl0g.Infrastructure\tools\local and apply some environment variables, either by your commandline directly, or by an .env file. A .env file could look like this:
 
-	STORAGE_CONNECTION_STRING=DefaultEndpointsProtocol=https;AccountName=devstorageloc;AccountKey=XAu7XZKtkGi07X4A6UBOskYXWDsz1olozI1sZ3VlL5fwARMqj0QbCifFKRlVlISoYJyKCgDuDPlRZkyt2cVVYg==;EndpointSuffix=core.windows.net
+	STORAGE_CONNECTION_STRING=DefaultEndpointsProtocol=https;AccountName=name;AccountKey=key;EndpointSuffix=core.windows.net
 	ENVIRONMENT=LOCAL
 	CREATE_DATABASE_CONNECTION_STRING=Server=database;User Id=sa;Password=MySuperSecretPassword123@;Connection Timeout=30
 	DATABASE_CONNECTION_STRING=Server=database;User Id=sa;Password=MySuperSecretPassword123@;Connection Timeout=30;	Database=Bl0g
