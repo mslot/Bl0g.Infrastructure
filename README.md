@@ -53,9 +53,13 @@ TODO: describe
 # Build, Deploy and Test
 
 ## Run local
-To run the platform local, you need to clone all projects down, to a single folder. Name all projects after the repo.
+Quick intro:
 
-Remember to run docker-compose build first!!
+1. Cd into Bl0g.Infrastructure\tools\local
+2. apply .env file
+3. Run InfraCtrl.ps1
+
+For a more indept intro, read the two secions below, Bl0g.Migrations and docker-compose.
 
 ### Bl0g.Migrations
 If you want to run the migrations project for it self add a appsettings.local.json to Bl0g.Migrations.Console. An example could be:
@@ -79,16 +83,28 @@ This has been set in the in the Bl0g.Migrations.Console csproj file. If you want
 If you want to run it as a normal console application, apply the docker host ip.
 
 ### docker-compose
-Cd into Bl0g.Infrastructure\tools\local and run SetUpDockerInfrastructure.ps1. Apply same username, database name and password. This script will create two connectionstring that is passed to docker-compose to do migrations and setup of the database:
+Cd into Bl0g.Infrastructure\tools\local and apply some environment variables, either by your commandline directly, or by an .env file. A .env file could look like this:
+
+	STORAGE_CONNECTION_STRING=DefaultEndpointsProtocol=https;AccountName=devstorageloc;AccountKey=XAu7XZKtkGi07X4A6UBOskYXWDsz1olozI1sZ3VlL5fwARMqj0QbCifFKRlVlISoYJyKCgDuDPlRZkyt2cVVYg==;EndpointSuffix=core.windows.net
+	ENVIRONMENT=LOCAL
+	CREATE_DATABASE_CONNECTION_STRING=Server=database;User Id=sa;Password=MySuperSecretPassword123@;Connection Timeout=30
+	DATABASE_CONNECTION_STRING=Server=database;User Id=sa;Password=MySuperSecretPassword123@;Connection Timeout=30;	Database=Bl0g
+	DATABASE_IDENTIFIER=SqlServer2016
+	DATABASE_PASSWORD=MySuperSecretPassword123@
+	DATABASE_NAME=Bl0g
+
+Now you can run InfraCtrl.ps1 which asks for a question, what the uri of content api is, copy the config into the SPA and runs docker-compose up, if nothing else is specified. It only sets the content api once pr terminal session (it uses an environment variable to check if config has already been copied).
+
+Remember some variables is duplicated into the connection strings. There is two connection strings
 
 1. CREATE_DATABASE_CONNECTION_STRING
 2. CONNECTION_STRING
 
 1) is without the database name. 2) is with database name.
 
-Both SQL connection strings has a timeout for 30 seconds.
+The first us used to create the database if not present. Number two is used to apply the migrations.
 
-It also passes on the database name, so it can create it. 
+Both SQL connection strings needs a decent timeout, i always set it to 30 seconds, because the database has to be spun up and ready. Even though the migrations depends on the database in docker-compose, this isn't strictly true. It only means the database needs to be started, BEFORE the migrations. It doesn't wait for the database container to be ready.
 
 For now, the migrations project only supports MSSQL Server. Moreover it assumes that the database of the SQL compliant server can be created with:
 

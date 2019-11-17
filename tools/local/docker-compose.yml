@@ -1,26 +1,45 @@
 version: '3.5'
 services:
-  # spa:
-  #   build:
-  #     context: ../../../Bl0g.SPA.WebApp/src/Bl0g.SPA.WebApp/Bl0g.SPA.WebApp/
-  #   ports:
-  #   - "6000:443"
-  #   - "7000:80"
-  #   depends_on: 
-  #     - database
-  #     - content-api
-  #   networks: 
-  #     - bl0g_network
+  content-function:
+    build:
+      context: ../../../Bl0g.Content.ConsoleApp/src/Bl0g.Content.ConsoleApp/
+      dockerfile: Bl0g.Content.ConsoleApp/Dockerfile
+    environment: 
+      DOTNET_ENVIRONMENT: "${ENVIRONMENT}"
+      STORAGE_CONNECTION_STRING: "${STORAGE_CONNECTION_STRING}"
+    depends_on: 
+      - database
+    networks: 
+      - bl0g_network
 
-  # content-api:
-  #   build:
-  #     context: ../../../Bl0g.Content.WebApi/src/Bl0g.Content.WebApi/
-  #   ports:
-  #   - "8000:80"
-  #   depends_on: 
-  #     - database
-  #   networks: 
-  #     - bl0g_network
+  spa:
+    build:
+      context: ../../../Bl0g.SPA.WebApp/src/Bl0g.SPA.WebApp/
+      dockerfile: Bl0g.SPA.WebApp/Dockerfile
+    environment: 
+      ASPNETCORE_ENVIRONMENT: "${ENVIRONMENT}"
+    ports:
+    - "6000:443"
+    - "7000:80"
+    depends_on: 
+      - database
+      - content-api
+    networks: 
+      - bl0g_network
+      
+  content-api:
+    build:
+      context: ../../../Bl0g.Content.WebApi/src/
+      dockerfile: Bl0g.Content.WebApi/Dockerfile
+    ports:
+    - "8000:80"
+    environment:
+      DATABASE_CONNECTION_STRING: "${DATABASE_CONNECTION_STRING}"
+      ASPNETCORE_ENVIRONMENT: "${ENVIRONMENT}"
+    depends_on: 
+      - database
+    networks: 
+      - bl0g_network
 
   migrations:
     build:
@@ -33,6 +52,7 @@ services:
       CREATE_DATABASE_CONNECTION_STRING: "${CREATE_DATABASE_CONNECTION_STRING}"
       DATABASE_NAME: "${DATABASE_NAME}"
       DATABASE_IDENTIFIER: "${DATABASE_IDENTIFIER}"
+      ASPNETCORE_ENVIRONMENT: "${ENVIRONMENT}"
     networks: 
       - bl0g_network
 
